@@ -1,0 +1,61 @@
+/* 404-specific layout (kept minimal, matches existing design tokens) */
+.error-wrap {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(900px 380px at 20% 0%, rgba(0, 80, 160, 0.14), transparent 55%),
+        radial-gradient(900px 380px at 80% 20%, rgba(0, 80, 160, 0.10), transparent 55%),
+        var(--bg);
+}
+
+.error-card {
+    max-width: 720px;
+    width: 100%;
+    padding: 46px 42px;
+    border-radius: calc(var(--radius) + 6px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.error-code {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.error-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.error-text {
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0 auto 26px;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error-links {
+    margin-top: 26px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-weight: 700;
+}
+
+.error-links a {
+    color: var(--primary);
+}

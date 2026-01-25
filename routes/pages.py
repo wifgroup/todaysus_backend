@@ -1,11 +1,19 @@
-from flask import Blueprint, render_template, abort, request
+from flask import Blueprint, jsonify, render_template, abort, request
 from datetime import datetime
 from dateutil import parser
 from db.mongo import mongo
+from models.page_model import create_page
 from utils.helper import normalize_articles
 
 pages_bp = Blueprint("pages", __name__)
 
+@pages_bp.app_errorhandler(404)
+def page_not_found(e):
+    return render_template(
+        "404.html",
+        current_year=datetime.utcnow().year
+    ), 404
+    
 @pages_bp.route("/<category_slug>/<article_slug>")
 def article_page(category_slug, article_slug):
 
@@ -297,7 +305,50 @@ def topic_page(topic_slug):
     )
 
 
+@pages_bp.route("/about")
+def about_page():
 
+    page = mongo.db.pages.find_one(
+        {"slug": "about", "is_active": True}
+    )
+
+    if not page:
+        abort(404)
+
+    # -------- COVERAGE (dynamic like home) -------- #
+    categories = list(
+        mongo.db.categories.find(
+            {"is_active": True}
+        ).sort("order", 1)
+    )
+
+    for c in categories:
+        c["_id"] = str(c["_id"])
+
+    return render_template(
+        "about.html",
+        page=page,
+        categories=categories,
+        current_year=datetime.utcnow().year
+    )
+
+@pages_bp.route("/api/v1/admin/pages", methods=["POST"])
+def create_page_api():
+    data = request.json
+    page = create_page(data)
+    mongo.db.pages.insert_one(page)
+    return jsonify({"message": "Page created"}), 201
+
+
+@pages_bp.route("/contact")
+def contact_page():
+    return render_template(
+        "contact.html",
+        seo_title="Contact Today’s US",
+        seo_description="Contact the Today’s US newsroom for editorial inquiries, corrections, or general questions.",
+        canonical_url="https://todaysus.com/contact",
+        current_year=datetime.utcnow().year
+    )
 
 
 @pages_bp.route("/")

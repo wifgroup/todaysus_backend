@@ -7,6 +7,7 @@ from routes.pages import pages_bp
 from routes.category_routes import category_bp
 from routes.topic_routes import topic_bp
 from routes.subscriber_routes import subscriber_bp
+from routes.contact_api import contact_bp
 
 
 app = Flask(__name__)
@@ -23,6 +24,7 @@ app.register_blueprint(category_bp)
 app.register_blueprint(topic_bp)
 
 
+app.register_blueprint(contact_bp)
 
 app.register_blueprint(subscriber_bp)
 

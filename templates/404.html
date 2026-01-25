@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>404 – Page Not Found | Today’s US</title>
+
+  <meta name="robots" content="noindex, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+        content="The page you’re looking for doesn’t exist or has moved. Return to Today’s US for the latest independent U.S. news and analysis." />
+
+  <link rel="canonical" href="https://todaysus.com/404" />
+
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/404.css" />
+</head>
+
+<body>
+
+  {% include "partials/header.html" %}
+
+  <main class="error-wrap" role="main">
+    <article class="error-card">
+      <div class="error-code">404</div>
+
+      <h1 class="error-title">Page not found</h1>
+
+      <p class="error-text">
+        The page you’re trying to reach doesn’t exist or may have moved.
+        You might have followed an outdated link or typed the address incorrectly.
+      </p>
+
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">Go to homepage</a>
+        <a href="/news" class="btn btn-ghost">Latest news</a>
+      </div>
+
+      <nav class="error-links" aria-label="Helpful links">
+        <a href="/politics">Politics</a>
+        <a href="/business">Business</a>
+        <a href="/technology">Technology</a>
+        <a href="/world">World</a>
+        <a href="/opinion">Opinion</a>
+      </nav>
+    </article>
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
