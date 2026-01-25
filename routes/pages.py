@@ -366,14 +366,43 @@ def ethics_page():
     return render_static_page("ethics", "ethics.html")
 
 
+# @pages_bp.route("/privacy-policy")
+# def privacy_policy_page():
+#     return render_static_page("privacy-policy", "page.html")
+
+
+# @pages_bp.route("/terms-of-use")
+# def terms_page():
+#     return render_static_page("terms-of-use", "page.html")
 @pages_bp.route("/privacy-policy")
 def privacy_policy_page():
-    return render_static_page("privacy-policy", "page.html")
+    page = mongo.db.pages.find_one(
+        {"slug": "privacy-policy", "is_active": True}
+    )
+    if not page:
+        abort(404)
+
+    return render_template(
+        "legal_page.html",
+        page=page,
+        current_year=datetime.utcnow().year
+    )
 
 
 @pages_bp.route("/terms-of-use")
-def terms_page():
-    return render_static_page("terms-of-use", "page.html")
+def terms_of_use_page():
+    page = mongo.db.pages.find_one(
+        {"slug": "terms-of-use", "is_active": True}
+    )
+    if not page:
+        abort(404)
+
+    return render_template(
+        "legal_page.html",
+        page=page,
+        current_year=datetime.utcnow().year
+    )
+
 
 @pages_bp.route("/")
 def home_page():

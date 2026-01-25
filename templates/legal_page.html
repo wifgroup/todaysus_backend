@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>{{ page.seo_title or page.title }} – Today’s US</title>
+
+    <meta name="description" content="{{ page.seo_description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://todaysus.com/{{ page.slug }}" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ page.seo_title or page.title }} – Today’s US" />
+    <meta property="og:description" content="{{ page.seo_description }}" />
+    <meta property="og:site_name" content="Today’s US" />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/legal.css" />
+</head>
+
+<body>
+
+    <!-- CONTEXT BAR -->
+
+    <!-- HEADER -->
+    {% include "partials/header.html" %}
+
+    <main class="legal-main container">
+
+        <!-- HERO -->
+        <header class="legal-hero">
+            <span class="legal-kicker"></span>
+            <h1>{{ page.title }}</h1>
+
+            {% if page.content.lead %}
+            <p class="legal-lead">
+                {{ page.content.lead }}
+            </p>
+            {% endif %}
+        </header>
+
+        <!-- SECTIONS -->
+        {% for section in page.content.sections %}
+        <section class="legal-section {% if section.highlight %}legal-highlight{% endif %}">
+            <h2>{{ section.title }}</h2>
+
+            {% if section.paragraphs %}
+                {% for p in section.paragraphs %}
+                <p>{{ p | safe }}</p>
+                {% endfor %}
+            {% endif %}
+
+            {% if section.list %}
+            <ul class="legal-list">
+                {% for item in section.list %}
+                <li>{{ item | safe }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+        {% endfor %}
+
+        <!-- LAST UPDATED -->
+        {% if page.updated_at %}
+        <section class="legal-meta">
+            <p>
+                Last updated:
+                <time datetime="{{ page.updated_at.isoformat() }}">
+                    {{ page.updated_at.strftime('%B %d, %Y') }}
+                </time>
+            </p>
+        </section>
+        {% endif %}
+
+    </main>
+
+    <!-- FOOTER -->
+    {% include "partials/footer.html" %}
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
