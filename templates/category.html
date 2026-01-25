@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ category.name }} – Today’s US</title>
+
+    <meta name="description" content="{{ category.seo_description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://todaysus.com/{{ category.slug }}/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ category.name }} – Today’s US" />
+    <meta property="og:description" content="{{ category.seo_description }}" />
+    <meta property="og:site_name" content="Today’s US" />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/category.css" />
+</head>
+
+<body>
+
+    <!-- CONTEXT BAR -->
+    <div class="context-bar">
+        <div class="container context-inner">
+            <div class="context-left">
+                <time id="currentDate"></time>
+                <span class="sep">•</span>
+                <span>United States</span>
+                <span class="sep">•</span>
+                <span class="status">Developing coverage</span>
+            </div>
+
+            <div class="context-right">
+                <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container header-inner">
+            <div class="brand">
+                <a class="brand-link" href="/" aria-label="Today’s US home">
+                    <span class="brand-mark"></span>
+                    <span class="brand-name">Today’s US</span>
+                </a>
+                <p class="brand-tag">U.S. News • Politics • Business • Tech</p>
+            </div>
+
+            <nav class="nav" aria-label="Primary">
+                <a href="/news">News</a>
+                <a href="/politics">Politics</a>
+                <a href="/business">Business</a>
+                <a href="/technology">Technology</a>
+                <a href="/world">World</a>
+                <a href="/opinion">Opinion</a>
+                <a class="nav-cta" href="#subscribe">Get Updates</a>
+            </nav>
+
+            <button class="menu-btn" id="menuBtn" type="button">
+                <span class="menu-lines"></span>
+            </button>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav" hidden>
+            <div class="container mobile-nav-inner">
+                <a href="/news">News</a>
+                <a href="/politics">Politics</a>
+                <a href="/business">Business</a>
+                <a href="/technology">Technology</a>
+                <a href="/world">World</a>
+                <a href="/opinion">Opinion</a>
+                <a href="#subscribe">Get Updates</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="category-main container">
+
+        <!-- CATEGORY HEADER -->
+        <header class="category-header">
+            <span class="category-kicker">Coverage</span>
+            <h1>{{ category.name }}</h1>
+            <p class="category-desc">
+                {{ category.description }}
+            </p>
+        </header>
+
+        <!-- MAIN GRID -->
+        <div class="category-grid">
+
+            <!-- MAIN CONTENT -->
+            <section class="category-content">
+
+                <!-- LEAD STORY -->
+                {% if lead_article %}
+                <article class="category-lead">
+                    <span class="label">Featured {{ lead_article.type }}</span>
+                    <h2>
+                        <a href="/{{ category.slug }}/{{ lead_article.slug }}">
+                            {{ lead_article.title }}
+                        </a>
+                    </h2>
+                    <p>{{ lead_article.excerpt }}</p>
+                    <div class="meta">
+                        <span>{{ lead_article.type | capitalize }}</span>
+                        <span class="sep">•</span>
+                        <time>
+                            {% if lead_article.published_at %}
+                            {{ lead_article.published_at.strftime('%b %d, %Y') }}
+                            {% else %}
+                            {{ lead_article.created_at.strftime('%b %d, %Y') }}
+                            {% endif %}
+
+                        </time>
+                    </div>
+                </article>
+                {% endif %}
+
+                <!-- STORY STREAM -->
+                <div class="story-stream">
+                    {% for a in stream_articles %}
+                    <article class="stream-item">
+                        <h3>
+                            <a href="/{{ category.slug }}/{{ a.slug }}">
+                                {{ a.title }}
+                            </a>
+                        </h3>
+                        <p>{{ a.excerpt }}</p>
+                        <span class="stream-meta">
+                            {{ a.type | capitalize }} •
+                            {% if a.published_at %}
+    {{ a.published_at.strftime('%b %d, %Y') }}
+{% else %}
+    {{ a.created_at.strftime('%b %d, %Y') }}
+{% endif %}
+
+                        </span>
+                    </article>
+                    {% endfor %}
+                </div>
+
+                <!-- PAGINATION -->
+                {% if has_more %}
+                <div class="pagination">
+                    <a href="/{{ category.slug }}?page={{ page + 1 }}" class="btn btn-ghost">
+                        Load more
+                    </a>
+                </div>
+                {% endif %}
+
+
+            </section>
+
+            <!-- SIDEBAR -->
+            <aside class="category-sidebar">
+
+                <div class="sidebar-box">
+                    <h4>Most read</h4>
+                    <ol class="most-read">
+                        {% for a in most_read %}
+                        <li>
+                            <a href="/{{ category.slug }}/{{ a.slug }}">
+                                {{ a.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+
+                <div class="sidebar-box">
+                    <h4>Topics</h4>
+                    <ul class="topic-list">
+                        {% for t in topics %}
+                        <li>
+                            <a href="/topics/{{ t.slug }}">{{ t.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="sidebar-box sidebar-subscribe">
+                    <h4>Stay informed</h4>
+                    <p>Get new reporting when it publishes.</p>
+                    <a href="#subscribe" class="btn btn-primary btn-full">Subscribe</a>
+                </div>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">Today’s US</div>
+                <p>Independent American newsroom focused on clarity, context, and verified reporting.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Company</h3>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/editorial-policy">Editorial policy</a>
+                <a href="/corrections">Corrections</a>
+            </div>
+
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <a href="/privacy-policy">Privacy policy</a>
+                <a href="/terms-of-use">Terms of use</a>
+                <a href="/ethics">Ethics</a>
+            </div>
+
+            <div class="footer-meta">
+                <p class="disclaimer">Not affiliated with any other media outlet.</p>
+                <small>© {{ current_year }} Today’s US</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

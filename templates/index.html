@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Today’s US – Independent U.S. News & Analysis</title>
+
+    <meta name="description"
+        content="Today’s US is an independent American newsroom delivering clear reporting and analysis on U.S. politics, business, technology, and society." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://todaysus.com/" />
+
+    <meta property="og:site_name" content="Today’s US" />
+    <meta property="og:title" content="Today’s US – Independent U.S. News & Analysis" />
+    <meta property="og:description"
+        content="Clear reporting and analysis on U.S. politics, business, technology, and society." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://todaysus.com/" />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- CONTEXT BAR -->
+    <div class="context-bar">
+        <div class="container context-inner">
+            <div class="context-left">
+                <time id="currentDate"></time>
+                <span class="sep">•</span>
+                <span>United States</span>
+                <span class="sep">•</span>
+                <span class="status">Developing coverage</span>
+            </div>
+            <div class="context-right">
+                <button class="icon-btn" id="themeToggle">☾</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container header-inner">
+            <div class="brand">
+                <a class="brand-link" href="/">
+                    <span class="brand-name">Today’s US</span>
+                </a>
+                <p class="brand-tag">U.S. News • Politics • Business • Tech</p>
+            </div>
+
+            <nav class="nav">
+                <a href="/news">News</a>
+                <a href="/politics">Politics</a>
+                <a href="/business">Business</a>
+                <a href="/technology">Technology</a>
+                <a href="/world">World</a>
+                <a href="/opinion">Opinion</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-left">
+                    <p class="kicker">Independent U.S. Journalism</p>
+                    <h1>Clear reporting on what’s shaping America today.</h1>
+                    <p class="lead">
+                        Today’s US is an independent newsroom focused on accuracy,
+                        verification, and context across U.S. politics, business,
+                        technology, and society.
+                    </p>
+                </div>
+
+                <aside class="hero-right">
+
+                    <!-- TODAY'S BRIEFING -->
+                    <div class="briefing">
+                        <div class="briefing-head">
+                            <h2>Today’s briefing</h2>
+                        </div>
+
+                        <ul class="briefing-list">
+                            {% for a in today_briefing %}
+                            <li>
+                                <a href="/{{ a.category.slug }}/{{ a.slug }}">
+                                    <span class="briefing-label">{{ a.category.name }}</span>
+                                    {{ a.title }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </aside>
+            </div>
+        </section>
+
+        <!-- FEATURED -->
+        <section class="section section-featured">
+            <div class="container featured-grid">
+
+                {% if primary_feature %}
+                <article class="feature-main">
+                    <span class="feature-label">Featured {{ primary_feature.type | capitalize }}</span>
+                    <h2>
+                        <a href="/{{ primary_feature.category.slug }}/{{ primary_feature.slug }}">
+                            {{ primary_feature.title }}
+                        </a>
+                    </h2>
+                    <p>{{ primary_feature.excerpt }}</p>
+                    <div class="feature-meta">
+                        <span>{{ primary_feature.category.name }}</span>
+                        <span class="sep">•</span>
+                        <time>
+                            {{ primary_feature.published_at.strftime('%b %d, %Y') }}
+                        </time>
+                    </div>
+                </article>
+                {% endif %}
+
+                <div class="feature-secondary">
+                    {% for a in secondary_features %}
+                    <article class="feature-side">
+                        <span class="feature-label subtle">{{ a.category.name }}</span>
+                        <h3>
+                            <a href="/{{ a.category.slug }}/{{ a.slug }}">
+                                {{ a.title }}
+                            </a>
+                        </h3>
+                        <p>{{ a.excerpt }}</p>
+                        <time>{{ a.published_at.strftime('%b %d, %Y') }}</time>
+                    </article>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LATEST BY CATEGORY -->
+        <section class="section section-latest-category">
+            <div class="container">
+
+                <div class="section-head">
+                    <h2>Latest coverage</h2>
+                    <p class="section-sub">
+                        The most recent reporting and analysis across key coverage areas.
+                    </p>
+                </div>
+                <div class="category-grid">
+
+                    {% for label, articles, slug in [
+                    ('Politics', latest_politics, 'politics'),
+                    ('Business', latest_business, 'business'),
+                    ('Technology', latest_technology, 'technology')
+                    ] %}
+
+                    <div class="category-block">
+                        <div class="category-head">
+                            <h3>{{ label }}</h3>
+                            <a href="/{{ slug }}" class="category-link">View all →</a>
+                        </div>
+
+                        {% for a in articles %}
+                        <article class="category-story">
+                            <h4>
+                                <a href="/{{ a.category.slug }}/{{ a.slug }}">{{ a.title }}</a>
+                            </h4>
+                            <p>{{ a.excerpt }}</p>
+                            <time>{{ a.published_at.strftime('%b %d, %Y') }}</time>
+                        </article>
+                        {% endfor %}
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- MOST READ -->
+        <section class="section section-most-read">
+            <div class="container">
+
+                <div class="most-read-head">
+                    <h2>Most read</h2>
+                    <p class="most-read-sub">
+                        Stories readers are engaging with today.
+                    </p>
+                </div>
+
+                <div class="most-read-grid">
+
+                    <!-- CURATED LIST -->
+                    <ol class="most-read-list refined">
+                        {% for a in most_read %}
+                        <li>
+                            <span class="mr-rank">{{ loop.index }}</span>
+                            <div class="mr-content">
+                                <span class="mr-label">{{ a.category.name }}</span>
+                                <a href="/{{ a.category.slug }}/{{ a.slug }}">
+                                    {{ a.title }}
+                                </a>
+                                <time>
+                                    {% if a.published_at %}
+                                    {{ a.published_at.strftime('%b %d, %Y') }}
+                                    {% else %}
+                                    {{ a.created_at.strftime('%b %d, %Y') }}
+                                    {% endif %}
+                                </time>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ol>
+
+                    <!-- EDITORIAL SPOTLIGHT -->
+                    {% if editors_pick %}
+                    <aside class="most-read-spotlight refined">
+                        <span class="spotlight-kicker">Editor’s pick</span>
+                        <h3>
+                            <a href="/{{ editors_pick.category.slug }}/{{ editors_pick.slug }}">
+                                {{ editors_pick.title }}
+                            </a>
+                        </h3>
+                        <p>{{ editors_pick.excerpt }}</p>
+                        <a class="spotlight-link" href="/{{ editors_pick.category.slug }}/{{ editors_pick.slug }}">
+                            Read the full analysis →
+                        </a>
+                    </aside>
+                    {% endif %}
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Editorial Grid -->
+        <section class="section section-editorial">
+            <div class="container editorial-grid">
+
+                <div class="editorial-main">
+
+                    <!-- THE BIG STORY -->
+                    {% if big_story %}
+                    <article class="story feature reveal">
+                        <span class="label">The Big Story</span>
+                        <h2>{{ big_story.title }}</h2>
+                        <p>{{ big_story.excerpt }}</p>
+                        <span class="meta">{{ big_story.type | capitalize }} · Updated regularly</span>
+                    </article>
+                    {% endif %}
+
+                    <!-- EDITOR’S FOCUS -->
+                    <div class="block">
+                        <h3 class="block-title">Editor’s focus</h3>
+                        <ul class="simple-list">
+                            {% for item in editors_focus %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- SIDEBAR -->
+                <aside class="editorial-sidebar reveal">
+
+                    <div class="sidebar-box">
+                        <h4>What We’re Watching</h4>
+                        <ul>
+                            {% for item in watching %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-box">
+                        <h4>Explainers</h4>
+                        <ul>
+                            {% for item in explainers %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-box subtle">
+                        <p>
+                            We clearly label News, Analysis, and Opinion.
+                            <a href="/editorial-policy">Read our editorial standards →</a>
+                        </p>
+                    </div>
+
+                </aside>
+
+            </div>
+        </section>
+        <!-- Coverage Areas -->
+        <section class="section section-coverage">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Coverage Areas</h2>
+                    <p class="section-sub">A newsroom structure designed for clarity, not noise.</p>
+                </div>
+
+                <div class="cards">
+                    {% for c in coverage_areas %}
+                    <a class="card reveal" href="/{{ c.slug }}">
+                        <h3>{{ c.name }}</h3>
+                        <p>{{ c.description }}</p>
+                        <span class="card-link">Explore →</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Built for trust -->
+        <section class="section section-standards">
+            <div class="container standards-grid">
+                <div class="standards-left reveal">
+                    <h2>Built for trust</h2>
+                    <p>
+                        Today’s US is committed to accuracy, transparency, and editorial independence.
+                    </p>
+
+                    <div class="ticks">
+                        {% for t in trust_points %}
+                        <div class="tick">{{ t }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <a class="btn btn-ghost" href="/editorial-policy">
+                        See our editorial policy
+                    </a>
+                </div>
+
+                <div class="standards-right reveal">
+                    <div class="quote">
+                        <p>“A newsroom should help readers understand what happened — and why it matters.”</p>
+                        <span class="quote-by">Today’s US — Editorial Mission</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SUBSCRIBE -->
+        <section class="section section-subscribe" id="subscribe">
+            <div class="container subscribe-wrap reveal">
+                <div class="subscribe-copy">
+                    <h2>Get launch updates</h2>
+                    <p>Receive a short email when our first stories publish and new sections go live.</p>
+                    <p class="mini">No spam. Unsubscribe anytime.</p>
+                </div>
+
+                <form class="subscribe-form" id="subscribeForm">
+                    <input name="email" type="email" placeholder="Email address" required />
+                    <button type="submit" class="btn btn-primary">Notify me</button>
+                    <p class="form-note"></p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">Today’s US</div>
+                <p>Independent American newsroom focused on clarity, context, and verified reporting.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Company</h3>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/editorial-policy">Editorial policy</a>
+                <a href="/corrections">Corrections</a>
+            </div>
+
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <a href="/privacy-policy">Privacy policy</a>
+                <a href="/terms-of-use">Terms of use</a>
+                <a href="/ethics">Ethics</a>
+            </div>
+
+            <div class="footer-meta">
+                <p class="disclaimer">Not affiliated with any other media outlet.</p>
+
+                <small>© {{ current_year }} Today’s US</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

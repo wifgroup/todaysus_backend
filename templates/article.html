@@ -1,0 +1,287 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>{{ article.seo_title }} – Today’s US</title>
+
+    <meta name="description" content="{{ article.seo_description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical -->
+<link rel="canonical" href="{{ canonical_url }}" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{ article.title }}" />
+<meta property="og:description" content="{{ article.seo_description }}" />
+<meta property="og:site_name" content="Today’s US" />
+
+<!-- NewsArticle schema -->
+<script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"NewsArticle",
+      "headline":"{{ article.title }}",
+      "datePublished":"{{ article.published_at.strftime('%Y-%m-%d') }}",
+      "dateModified":"{{ article.updated_at.strftime('%Y-%m-%d') }}",
+      "author":{
+        "@type":"Organization",
+        "name":"{{ article.author.name }}"
+      },
+      "publisher":{
+        "@type":"NewsMediaOrganization",
+        "name":"Today’s US",
+        "logo":{
+          "@type":"ImageObject",
+          "url":"https://todaysus.com/logo.png"
+        }
+      },
+      "mainEntityOfPage":{
+        "@type":"WebPage",
+        "@id":"{{ canonical_url }}"
+      }
+    }
+    </script>
+
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/article.css" />
+</head>
+
+<body>
+
+    <!-- CONTEXT BAR -->
+    <div class="context-bar">
+        <div class="container context-inner">
+            <div class="context-left">
+                <time>{{ article.published_at.strftime('%A, %B %d, %Y') }}</time>
+                <span class="sep">•</span>
+                <span>United States</span>
+                <span class="sep">•</span>
+                <span class="status">Developing coverage</span>
+            </div>
+
+            <div class="context-right">
+                <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container header-inner">
+            <div class="brand">
+                <a class="brand-link" href="/" aria-label="Today’s US home">
+                    <span class="brand-name">Today’s US</span>
+                </a>
+                <p class="brand-tag">U.S. News • Politics • Business • Tech</p>
+            </div>
+
+            <nav class="nav" aria-label="Primary">
+                <a href="/news">News</a>
+                <a href="/politics">Politics</a>
+                <a href="/business">Business</a>
+                <a href="/technology">Technology</a>
+                <a href="/world">World</a>
+                <a href="/opinion">Opinion</a>
+                <a class="nav-cta" href="#subscribe">Get Updates</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="article-main container">
+
+        <div class="article-grid">
+
+            <!-- ARTICLE CONTENT -->
+            <article class="article-content">
+
+                <header class="article-header">
+                    <span class="article-kicker">{{ article.type | capitalize }}</span>
+                    <h1>{{ article.title }}</h1>
+
+                    <p class="article-deck">{{ article.excerpt }}</p>
+
+                    <div class="article-meta">
+                        <span class="author">By {{ article.author.name }}</span>
+                        <span class="sep">•</span>
+                        <time datetime="{{ article.published_at }}">
+                            {{ article.published_at.strftime('%B %d, %Y') }}
+                        </time>
+
+                        {% if article.has_update %}
+                        <span class="sep">•</span>
+                        <span class="update">Updated</span>
+                        {% endif %}
+                    </div>
+                </header>
+
+                <figure class="article-figure">
+                    <img src="/static/images/{{ article.featured_image }}" alt="{{ article.image_caption }}">
+                    <figcaption>{{ article.image_caption }}</figcaption>
+                </figure>
+
+                <!-- KEY TAKEAWAYS -->
+                {% if article.key_takeaways %}
+                <section class="key-takeaways">
+                    <h3>Key takeaways</h3>
+                    <ul>
+                        {% for item in article.key_takeaways %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% endif %}
+
+                <section class="article-body">
+                    {{ article.content_html | safe }}
+                </section>
+
+                <footer class="article-footer">
+                    <div class="article-tags">
+                        <span>Topics:</span>
+                        {% for topic in article.topics %}
+                        <a href="/topics/{{ topic.slug }}">{{ topic.name }}</a>
+                        {% endfor %}
+                    </div>
+                </footer>
+
+                <section class="author-box">
+                    <h3>About the author</h3>
+                    <p>
+                        {{ article.author.bio if article.author.bio else
+                        "The Today’s US Editorial Desk publishes reporting and analysis produced collaboratively by the
+                        newsroom." }}
+                    </p>
+                </section>
+
+                <section class="article-newsletter">
+                    <h3>Stay informed</h3>
+                    <p>Get thoughtful reporting and analysis delivered when new stories publish.</p>
+                    <a href="#subscribe" class="btn btn-primary">Subscribe to Today’s US</a>
+                </section>
+
+            </article>
+
+            <!-- SIDEBAR -->
+            <aside class="article-sidebar">
+
+                <div class="sidebar-box">
+                    <h4>Most relevant</h4>
+                    <ul>
+                        {% for r in relevant_articles %}
+                        <li>
+                            <a href="/{{ r.category.slug }}/{{ r.slug }}">
+                                {{ r.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div class="sidebar-box">
+                    <h4>Most recent</h4>
+                    <ul>
+                        {% for r in recent_articles %}
+                        <li>
+                            <a href="/{{ r.category.slug }}/{{ r.slug }}">
+                                {{ r.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div class="sidebar-box subtle">
+                    <p>
+                        This article follows our editorial standards.
+                        <a href="/editorial-policy">Learn more →</a>
+                    </p>
+                </div>
+
+                <div class="sidebar-box sidebar-subscribe">
+                    <h4>Stay informed</h4>
+                    <p class="subscribe-text">
+                        Get notified when new reporting and analysis is published.
+                    </p>
+                    <a href="#subscribe" class="btn btn-primary btn-full">
+                        Subscribe to Today’s US
+                    </a>
+                </div>
+
+            </aside>
+
+        </div>
+
+        <!-- AD SLOT -->
+        {% if show_ads %}
+        <div class="ad-slot">
+            <span>Advertisement</span>
+            <div class="ad-placeholder">Ad space</div>
+        </div>
+        {% endif %}
+
+        <!-- MORE COVERAGE -->
+       <section class="more-coverage">
+    <div class="more-coverage-head">
+        <h2>More on {{ article.category.name }}</h2>
+        <p class="more-coverage-sub">
+            Additional reporting and analysis from Today’s US.
+        </p>
+    </div>
+
+    <div class="coverage-grid">
+        {% for m in more_coverage %}
+        <article class="coverage-card">
+            <span class="coverage-kicker">{{ m.type | capitalize }}</span>
+            <h3>
+                <a href="/{{ m.category.slug }}/{{ m.slug }}">
+                    {{ m.title }}
+                </a>
+            </h3>
+            <p>{{ m.excerpt }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">Today’s US</div>
+                <p>Independent American newsroom focused on clarity, context, and verified reporting.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Company</h3>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/editorial-policy">Editorial policy</a>
+                <a href="/corrections">Corrections</a>
+            </div>
+
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <a href="/privacy-policy">Privacy policy</a>
+                <a href="/terms-of-use">Terms of use</a>
+                <a href="/ethics">Ethics</a>
+            </div>
+
+            <div class="footer-meta">
+                <p class="disclaimer">Not affiliated with any other media outlet.</p>
+                <small>© {{ current_year }} Today’s US</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>
