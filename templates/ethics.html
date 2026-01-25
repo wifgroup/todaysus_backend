@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ page.seo_title }}</title>
+
+    <meta name="description" content="{{ page.seo_description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://todaysus.com/{{ page.slug }}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ page.seo_title }}" />
+    <meta property="og:description" content="{{ page.seo_description }}" />
+    <meta property="og:site_name" content="Today’s US" />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/ethics.css" />
+</head>
+
+<body>
+
+{% include "partials/header.html" %}
+
+<main class="ethics-main container">
+
+    <!-- HERO -->
+    <section class="ethics-hero">
+        <span class="ethics-kicker">{{ page.content.hero.kicker }}</span>
+        <h1>{{ page.content.hero.heading }}</h1>
+        <p class="ethics-lead">
+            {{ page.content.hero.lead }}
+        </p>
+    </section>
+
+    <!-- INTRO -->
+    <section class="ethics-intro">
+        <p>{{ page.content.intro }}</p>
+    </section>
+
+    <!-- CORE PRINCIPLES -->
+    <section class="ethics-section">
+        <h2>Core principles</h2>
+
+        <div class="ethics-cards">
+            {% for card in page.content.core_principles %}
+            <div class="ethics-card">
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.body }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- CONDUCT -->
+    <section class="ethics-section ethics-highlight">
+        <h2>Professional conduct</h2>
+        <ul class="ethics-list">
+            {% for item in page.content.professional_conduct %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- CONFLICTS -->
+    <section class="ethics-section">
+        <h2>Conflicts of interest</h2>
+        <p>{{ page.content.conflicts_of_interest }}</p>
+    </section>
+
+    <!-- AI -->
+    <section class="ethics-section">
+        <h2>Use of artificial intelligence</h2>
+        <p>{{ page.content.ai_use }}</p>
+    </section>
+
+    <!-- REPORTING CONCERNS -->
+    <section class="ethics-section ethics-contact">
+        <h2>Raising concerns</h2>
+        <p>{{ page.content.raising_concerns | safe }}</p>
+    </section>
+
+    <!-- META -->
+    <section class="ethics-meta">
+        <p>{{ page.content.meta }}</p>
+    </section>
+
+</main>
+
+{% include "partials/footer.html" %}
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

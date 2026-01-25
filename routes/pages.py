@@ -3,7 +3,7 @@ from datetime import datetime
 from dateutil import parser
 from db.mongo import mongo
 from models.page_model import create_page
-from utils.helper import normalize_articles
+from utils.helper import normalize_articles, render_static_page
 
 pages_bp = Blueprint("pages", __name__)
 
@@ -13,7 +13,7 @@ def page_not_found(e):
         "404.html",
         current_year=datetime.utcnow().year
     ), 404
-    
+ 
 @pages_bp.route("/<category_slug>/<article_slug>")
 def article_page(category_slug, article_slug):
 
@@ -350,6 +350,30 @@ def contact_page():
         current_year=datetime.utcnow().year
     )
 
+
+@pages_bp.route("/editorial-policy")
+def editorial_policy_page():
+    return render_static_page("editorial-policy", "editorial-policy.html")
+
+
+@pages_bp.route("/corrections")
+def corrections_page():
+    return render_static_page("corrections", "corrections.html")
+
+
+@pages_bp.route("/ethics")
+def ethics_page():
+    return render_static_page("ethics", "ethics.html")
+
+
+@pages_bp.route("/privacy-policy")
+def privacy_policy_page():
+    return render_static_page("privacy-policy", "page.html")
+
+
+@pages_bp.route("/terms-of-use")
+def terms_page():
+    return render_static_page("terms-of-use", "page.html")
 
 @pages_bp.route("/")
 def home_page():

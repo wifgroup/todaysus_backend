@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ page.seo_title }}</title>
+
+    <meta name="description" content="{{ page.seo_description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://todaysus.com/{{ page.slug }}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ page.seo_title }}" />
+    <meta property="og:description" content="{{ page.seo_description }}" />
+    <meta property="og:site_name" content="Today’s US" />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/corrections.css" />
+</head>
+
+<body>
+
+{% include "partials/header.html" %}
+
+<main class="corrections-main container">
+
+    <!-- HERO -->
+    <header class="corrections-hero">
+        <span class="corrections-kicker">{{ page.content.hero.kicker }}</span>
+        <h1>{{ page.content.hero.heading }}</h1>
+        <p class="corrections-lead">
+            {{ page.content.hero.lead }}
+        </p>
+    </header>
+
+    <!-- POLICY -->
+    <section class="corrections-section">
+        <h2>{{ page.content.policy.title }}</h2>
+        <p>{{ page.content.policy.body }}</p>
+    </section>
+
+    <section class="corrections-section">
+        <h2>{{ page.content.process.title }}</h2>
+        <p>{{ page.content.process.intro }}</p>
+
+        <ul class="corrections-list">
+            {% for item in page.content.process["items"] %}
+            <li>{{ item | safe }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="corrections-section corrections-highlight">
+        <h2>{{ page.content.placement.title }}</h2>
+        <p>{{ page.content.placement.body }}</p>
+    </section>
+
+    <section class="corrections-section">
+        <h2>{{ page.content.reporting.title }}</h2>
+        <p>{{ page.content.reporting.body }}</p>
+        <p class="corrections-contact">
+            {{ page.content.reporting.contact | safe }}
+        </p>
+    </section>
+
+    <section class="corrections-section corrections-meta">
+        <h2>{{ page.content.meta.title }}</h2>
+        <p>{{ page.content.meta.body }}</p>
+    </section>
+
+</main>
+
+{% include "partials/footer.html" %}
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

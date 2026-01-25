@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <title>{{ page.seo_title }}</title>
+  <meta name="description" content="{{ page.seo_description }}" />
+  <meta name="robots" content="index, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="canonical" href="https://todaysus.com/{{ page.slug }}" />
+
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/editorial-policy.css" />
+</head>
+
+<body>
+
+{% include "partials/header.html" %}
+
+<main class="policy-main container">
+
+  <!-- HERO -->
+  <header class="policy-hero">
+    <span class="policy-kicker">{{ page.content.hero.kicker }}</span>
+    <h1>{{ page.content.hero.headline }}</h1>
+    <p class="policy-lead">{{ page.content.hero.lead }}</p>
+  </header>
+
+  <!-- SECTIONS -->
+  {% for section in page.content.sections %}
+  <section class="policy-section">
+    <h2>{{ section.heading }}</h2>
+    <p>{{ section.body }}</p>
+  </section>
+  {% endfor %}
+
+</main>
+
+{% include "partials/footer.html" %}
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

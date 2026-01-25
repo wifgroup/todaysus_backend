@@ -1,0 +1,90 @@
+/* ===========================
+CORRECTIONS PAGE
+=========================== */
+
+.corrections-main {
+  margin-top: 60px;
+  max-width: 900px;
+}
+
+/* HERO */
+.corrections-hero {
+  margin-bottom: 60px;
+}
+
+.corrections-kicker {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+}
+
+.corrections-hero h1 {
+  font-size: 3rem;
+  margin: 10px 0;
+}
+
+.corrections-lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+/* SECTIONS */
+.corrections-section {
+  margin-bottom: 50px;
+}
+
+.corrections-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+}
+
+.corrections-section p {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 75ch;
+}
+
+/* LIST */
+.corrections-list {
+  margin-left: 20px;
+  margin-top: 14px;
+}
+
+.corrections-list li {
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+/* HIGHLIGHT */
+.corrections-highlight {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    var(--surface-2)
+  );
+  padding: 32px;
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+}
+
+/* CONTACT */
+.corrections-contact {
+  font-weight: 700;
+}
+
+/* META */
+.corrections-meta {
+  border-top: 1px solid var(--border);
+  padding-top: 30px;
+  font-size: 0.95rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .corrections-hero h1 {
+    font-size: 2.3rem;
+  }
+}

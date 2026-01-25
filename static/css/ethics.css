@@ -1,0 +1,128 @@
+/* ===========================
+ETHICS / CODE OF CONDUCT
+=========================== */
+
+.ethics-main {
+  margin-top: 70px;
+}
+
+/* HERO */
+.ethics-hero {
+  max-width: 800px;
+  margin-bottom: 60px;
+}
+
+.ethics-kicker {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.ethics-hero h1 {
+  font-size: clamp(2.5rem, 4vw, 3.2rem);
+  margin: 12px 0;
+}
+
+.ethics-lead {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+/* INTRO */
+.ethics-intro {
+  max-width: 720px;
+  margin-bottom: 70px;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+/* SECTIONS */
+.ethics-section {
+  margin-bottom: 80px;
+}
+
+.ethics-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+/* CARDS */
+.ethics-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.ethics-card {
+  padding: 28px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    var(--surface-2)
+  );
+  box-shadow: var(--shadow-soft);
+}
+
+.ethics-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.ethics-card p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* LIST */
+.ethics-list {
+  margin-left: 20px;
+  max-width: 720px;
+}
+
+.ethics-list li {
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+/* HIGHLIGHT */
+.ethics-highlight {
+  padding: 36px;
+  border-left: 4px solid var(--primary);
+  background: linear-gradient(
+    135deg,
+    rgba(0,80,160,0.12),
+    rgba(0,80,160,0.04)
+  );
+  border-radius: 14px;
+}
+
+/* CONTACT */
+.ethics-contact a {
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* META */
+.ethics-meta {
+  border-top: 1px solid var(--border);
+  padding-top: 30px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  max-width: 720px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .ethics-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .ethics-hero h1 {
+    font-size: 2.3rem;
+  }
+}

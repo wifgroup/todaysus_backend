@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from flask import abort, render_template
 from db.mongo import mongo
 from models.topic_model import create_topic
 from dateutil import parser
@@ -41,3 +43,19 @@ def normalize_articles(items):
 
         a["_id"] = str(a["_id"])
     return items
+
+
+def render_static_page(slug, template):
+    page = mongo.db.pages.find_one({
+        "slug": slug,
+        "is_active": True
+    })
+
+    if not page:
+        abort(404)
+
+    return render_template(
+        template,
+        page=page,
+        current_year=datetime.utcnow().year
+    )
