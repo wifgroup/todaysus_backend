@@ -4,14 +4,13 @@ from db.mongo import mongo
 
 sitemap_bp = Blueprint("sitemap", __name__)
 
-BASE_URL = "http://127.0.0.1:5000"
-# BASE_URL = "https://todaysus-backend.vercel.app"
+BASE_URL = "https://www.todaysus.com/"
 
 
 @sitemap_bp.route("/sitemap.xml", methods=["GET"])
 def sitemap():
     urls = []
-    BASE_URL = "https://todaysus-backend.vercel.app"
+    BASE_URL = "https://www.todaysus.com/"
 
     # ---------- Home ----------
     urls.append({
@@ -87,7 +86,7 @@ def sitemap():
 
 @sitemap_bp.route("/news-sitemap.xml", methods=["GET"])
 def news_sitemap():
-    BASE_URL = "https://todaysus-backend.vercel.app"
+    BASE_URL = "https://www.todaysus.com/"
 
     articles = mongo.db.articles.find(
         {
