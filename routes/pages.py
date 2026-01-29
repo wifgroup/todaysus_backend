@@ -4,8 +4,18 @@ from dateutil import parser
 from db.mongo import mongo
 from models.page_model import create_page
 from utils.helper import normalize_articles, render_static_page
+from werkzeug.exceptions import HTTPException
+from flask import send_from_directory
 
 pages_bp = Blueprint("pages", __name__)
+
+@pages_bp.route("/sw.js")
+def service_worker():
+    return send_from_directory(
+        directory="static",
+        path="js/sw.js",
+        mimetype="application/javascript"
+    )
 
 @pages_bp.app_errorhandler(404)
 def page_not_found(e):
@@ -13,6 +23,20 @@ def page_not_found(e):
         "404.html",
         current_year=datetime.utcnow().year
     ), 404
+
+
+@pages_bp.app_errorhandler(Exception)
+def handle_all_errors(e):
+    # If it's a known HTTP error (404, 403, etc.), let Flask handle it
+    if isinstance(e, HTTPException):
+        return e
+
+    # Otherwise treat it as 500
+    return render_template(
+        "500.html",
+        current_year=datetime.utcnow().year
+    ), 500
+
  
 @pages_bp.route("/<category_slug>/<article_slug>")
 def article_page(category_slug, article_slug):

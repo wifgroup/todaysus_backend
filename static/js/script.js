@@ -1,10 +1,31 @@
 /* ===========================
 FILE: script.js
-Animations + UX (no backend)
+Animations + UX + Page Cache
 =========================== */
+
+// Register Service Worker (client-side cache)
+(function () {
+  if (!("serviceWorker" in navigator)) return;
+
+  window.addEventListener("load", async () => {
+    try {
+      await navigator.serviceWorker.register("/sw.js");
+      // console.log("SW registered");
+    } catch (e) {
+      // console.log("SW failed", e);
+    }
+  });
+})();
 
 
 (function () {
+
+  
+
+  /* ===========================
+     EXISTING UX / UI LOGIC
+  =========================== */
+
   // Footer year
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -21,7 +42,7 @@ Animations + UX (no backend)
     });
   }
 
-  // Theme toggle (stores in localStorage)
+  // Theme toggle
   const themeToggle = document.getElementById("themeToggle");
   const root = document.documentElement;
 
@@ -58,11 +79,8 @@ Animations + UX (no backend)
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
 
-  // Subscribe form (front-end only)
+  // Subscribe form
   const form = document.getElementById("subscribeForm");
-  const note = document.getElementById("formNote");
-
-
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -76,22 +94,15 @@ Animations + UX (no backend)
       try {
         const res = await fetch("/api/v1/subscribe", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email: email,
-            source: "homepage"
-          })
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, source: "homepage" })
         });
 
         const data = await res.json();
-
         note.textContent = data.message || "Done!";
         note.style.color = "green";
         form.reset();
-
-      } catch (err) {
+      } catch {
         note.textContent = "Something went wrong. Try again.";
         note.style.color = "red";
       }
@@ -100,18 +111,14 @@ Animations + UX (no backend)
 
 })();
 
-
-
-// ===========================
-// Auto-update U.S. date
-// ===========================
+/* ===========================
+   Auto-update U.S. date
+=========================== */
 (function updateUSDate() {
   const timeEl = document.getElementById("currentDate");
   if (!timeEl) return;
 
-  // Use U.S. Eastern Time (newsroom standard)
   const now = new Date();
-
   const options = {
     weekday: "long",
     year: "numeric",
@@ -120,17 +127,5 @@ Animations + UX (no backend)
     timeZone: "America/New_York"
   };
 
-  // Human-readable date
-  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(now);
-
-  // ISO date for datetime attribute
-  const isoDate = new Intl.DateTimeFormat("en-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    timeZone: "America/New_York"
-  }).format(now);
-
-  timeEl.textContent = formattedDate;
-  timeEl.setAttribute("datetime", isoDate);
+  timeEl.textContent = new Intl.DateTimeFormat("en-US", options).format(now);
 })();

@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,43 +11,87 @@
     <meta name="robots" content="index, follow" />
 
     <!-- Canonical -->
-<link rel="canonical" href="{{ canonical_url }}" />
+    <link rel="canonical" href="{{ canonical_url }}" />
 
-<!-- Open Graph -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="{{ article.title }}" />
-<meta property="og:description" content="{{ article.seo_description }}" />
-<meta property="og:site_name" content="Today’s US" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:description" content="{{ article.seo_description }}" />
+    <meta property="og:site_name" content="Today’s US" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:image" content="{{ article.featured_image }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
-<!-- NewsArticle schema -->
-<script type="application/ld+json">
+    <!-- News keywords -->
+    <meta name="news_keywords"
+        content="{{ article.category.name }}, {{ article.topics | map(attribute='name') | join(', ') }}">
+
+
+    <!-- NewsArticle schema -->
+    <script type="application/ld+json">
     {
-      "@context":"https://schema.org",
-      "@type":"NewsArticle",
-      "headline":"{{ article.title }}",
-      "datePublished":"{{ article.published_at.strftime('%Y-%m-%d') }}",
-      "dateModified":"{{ article.updated_at.strftime('%Y-%m-%d') }}",
-      "author":{
-        "@type":"Organization",
-        "name":"{{ article.author.name }}"
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "{{ article.title }}",
+      "image": [
+        "https://todaysus.com/static/images/{{ article.featured_image }}"
+      ],
+      "datePublished": "{{ article.published_at.isoformat() }}",
+      "dateModified": "{{ article.updated_at.isoformat() }}",
+      "articleSection": "{{ article.category.name }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ article.author.name }}",
+        "url": "https://todaysus.com/author/{{ article.author.name }}"
       },
-      "publisher":{
-        "@type":"NewsMediaOrganization",
-        "name":"Today’s US",
-        "logo":{
-          "@type":"ImageObject",
-          "url":"https://todaysus.com/logo.png"
+      "publisher": {
+        "@type": "NewsMediaOrganization",
+        "name": "Today’s US",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://todaysus.com/logo.png",
+          "width": 600,
+          "height": 60
         }
       },
-      "mainEntityOfPage":{
-        "@type":"WebPage",
-        "@id":"{{ canonical_url }}"
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ canonical_url }}"
       }
     }
     </script>
 
-<link rel="stylesheet" href="/static/css/style.css" />
-<link rel="stylesheet" href="/static/css/article.css" />
+    <!-- Breadcrumb schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://todaysus.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{ article.category.name }}",
+          "item": "https://todaysus.com/{{ article.category.slug }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ article.title }}",
+          "item": "{{ canonical_url }}"
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/article.css" />
 </head>
 
 <body>
@@ -226,28 +270,28 @@
         {% endif %}
 
         <!-- MORE COVERAGE -->
-       <section class="more-coverage">
-    <div class="more-coverage-head">
-        <h2>More on {{ article.category.name }}</h2>
-        <p class="more-coverage-sub">
-            Additional reporting and analysis from Today’s US.
-        </p>
-    </div>
+        <section class="more-coverage">
+            <div class="more-coverage-head">
+                <h2>More on {{ article.category.name }}</h2>
+                <p class="more-coverage-sub">
+                    Additional reporting and analysis from Today’s US.
+                </p>
+            </div>
 
-    <div class="coverage-grid">
-        {% for m in more_coverage %}
-        <article class="coverage-card">
-            <span class="coverage-kicker">{{ m.type | capitalize }}</span>
-            <h3>
-                <a href="/{{ m.category.slug }}/{{ m.slug }}">
-                    {{ m.title }}
-                </a>
-            </h3>
-            <p>{{ m.excerpt }}</p>
-        </article>
-        {% endfor %}
-    </div>
-</section>
+            <div class="coverage-grid">
+                {% for m in more_coverage %}
+                <article class="coverage-card">
+                    <span class="coverage-kicker">{{ m.type | capitalize }}</span>
+                    <h3>
+                        <a href="/{{ m.category.slug }}/{{ m.slug }}">
+                            {{ m.title }}
+                        </a>
+                    </h3>
+                    <p>{{ m.excerpt }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
 
 
     </main>

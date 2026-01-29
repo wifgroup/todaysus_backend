@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>500 – Internal Server Error | Today’s US</title>
+
+  <meta name="robots" content="noindex, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+        content="Something went wrong on our end. We're working to fix the issue. Please try again shortly or return to Today’s US homepage." />
+
+  <link rel="canonical" href="https://todaysus.com/500" />
+
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/404.css" />
+</head>
+
+<body>
+
+  {% include "partials/header.html" %}
+
+  <main class="error-wrap" role="main">
+    <article class="error-card">
+      <div class="error-code">500</div>
+
+      <h1 class="error-title">Something went wrong</h1>
+
+      <p class="error-text">
+        We’re experiencing a technical issue on our side.
+        Our team has been notified and is working to restore full access.
+        Please try again in a few moments.
+      </p>
+
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">Go to homepage</a>
+        <button onclick="window.location.reload()" class="btn btn-ghost">
+          Try again
+        </button>
+      </div>
+
+      <nav class="error-links" aria-label="Helpful links">
+        <a href="/politics">Politics</a>
+        <a href="/business">Business</a>
+        <a href="/technology">Technology</a>
+        <a href="/world">World</a>
+        <a href="/opinion">Opinion</a>
+      </nav>
+    </article>
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
