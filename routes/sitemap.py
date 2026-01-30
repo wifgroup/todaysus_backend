@@ -28,12 +28,33 @@ def sitemap():
         "priority": "1.0"
     })
     
+    # ---------- Static Pages ----------
     for page in static_pages:
         urls.append({
             "loc": f"{BASE_URL}/{page}",
             "lastmod": datetime.utcnow().date(),
             "changefreq": "monthly",
             "priority": "0.5"
+        })
+        
+    # ---------- Static Pages ----------
+    authors = mongo.db.author.find(
+        {
+            
+            "is_active": True
+        }
+    )
+    
+    for author in authors:
+        urls.append({
+            "loc": f"{BASE_URL}/authors/{author['slug']}",
+            "lastmod": (
+                author.get("updated_at")
+                or author.get("created_at")
+                or datetime.utcnow()
+            ).date(),
+            "changefreq": "monthly",
+            "priority": "0.6"
         })
 
     # ---------- Categories ----------
@@ -79,7 +100,7 @@ def sitemap():
                 or datetime.utcnow()
             ).date(),
             "changefreq": "weekly",
-            "priority": "0.7"
+            "priority": "0.8"
         })
 
     # ---------- Build XML ----------
