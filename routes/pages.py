@@ -123,6 +123,20 @@ def article_page(category_slug, article_slug):
     for m in more_coverage:
         m["_id"] = str(m["_id"])
 
+    # ---------------- AUTHOR ---------------- #
+    author = None
+
+    if article.get("author") and article["author"].get("slug"):
+        author = mongo.db.authors.find_one(
+            {
+                "slug": article["author"]["slug"],
+                "is_active": True
+            }
+        )
+
+        if author:
+            author["_id"] = str(author["_id"])
+
     
     # ---------------- ADS FLAG ---------------- #
     show_ads = False  # 🔴 Enable later when ads are ready
@@ -131,6 +145,7 @@ def article_page(category_slug, article_slug):
     return render_template(
         "article.html",
         article=article,
+        author=author,
         canonical_url=canonical_url,
         current_year=datetime.utcnow().year,
 
@@ -144,7 +159,6 @@ def article_page(category_slug, article_slug):
         # Ads
         show_ads=show_ads
     )
-
 
 
 @pages_bp.route("/<category_slug>")
@@ -244,8 +258,6 @@ def category_page(category_slug):
         page=page,
         has_more=has_more
     )
-
-
 
 @pages_bp.route("/topics/<topic_slug>")
 def topic_page(topic_slug):
@@ -424,6 +436,42 @@ def terms_of_use_page():
     return render_template(
         "legal_page.html",
         page=page,
+        current_year=datetime.utcnow().year
+    )
+
+@pages_bp.route("/authors/<slug>")
+def author_page(slug):
+
+    author = mongo.db.authors.find_one({
+        "slug": slug,
+        "is_active": True,
+        "is_public": True
+    })
+
+    if not author:
+        abort(404)
+
+    author["_id"] = str(author["_id"])
+
+    # Latest articles by this author
+    articles = list(
+        mongo.db.articles.find(
+            {
+                "status": "published",
+                "is_deleted": False,
+                "author.slug": slug
+            }
+        )
+        .sort("published_at", -1)
+        .limit(10)
+    )
+
+    normalize_articles(articles)
+
+    return render_template(
+        "author.html",
+        author=author,
+        articles=articles,
         current_year=datetime.utcnow().year
     )
 

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>{{ author.seo_title }}</title>
+
+    <meta name="description" content="{{ author.seo_description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://todaysus.com/authors/{{ author.slug }}" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="{{ author.display_name }} – Today’s US" />
+    <meta property="og:description" content="{{ author.seo_description }}" />
+    <meta property="og:site_name" content="Today’s US" />
+
+    {% if author.photo and author.photo.url %}
+    <meta property="og:image" content="{{ author.photo.url }}" />
+    {% endif %}
+
+    <!-- AUTHOR SCHEMA -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ author.display_name }}",
+      "jobTitle": "{{ author.role }}",
+      "worksFor": {
+        "@type": "NewsMediaOrganization",
+        "name": "Today’s US"
+      },
+      "url": "https://todaysus.com/authors/{{ author.slug }}",
+      {% if author.photo and author.photo.url %}
+      "image": "{{ author.photo.url }}",
+      {% endif %}
+      {% if author.social %}
+      "sameAs": [
+        {% if author.social.twitter %}"{{ author.social.twitter }}",{% endif %}
+        {% if author.social.linkedin %}"{{ author.social.linkedin }}",{% endif %}
+        {% if author.social.github %}"{{ author.social.github }}"{% endif %}
+      ]
+      {% endif %}
+    }
+    </script>
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/author.css" />
+</head>
+
+<body>
+
+{% include "partials/header.html" %}
+
+<main class="author-main container">
+
+    <!-- AUTHOR HERO -->
+    <section class="author-hero">
+
+        <div class="author-avatar">
+            {% if author.photo and author.photo.url %}
+                <img src="{{ author.photo.url }}"
+                     alt="{{ author.photo.alt or author.display_name }}"
+                     class="author-photo" />
+            {% else %}
+                <div class="avatar-placeholder">
+                    {{ author.display_name[:1] }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="author-intro">
+
+            <h1>{{ author.display_name }}</h1>
+
+            {% if author.role %}
+            <p class="author-role">{{ author.role }}</p>
+            {% endif %}
+
+            {% if author.short_bio %}
+            <p class="author-bio">
+                {{ author.short_bio }}
+            </p>
+            {% endif %}
+
+            <!-- META -->
+            <div class="author-meta">
+                {% if author.location %}
+                <span>Based in {{ author.location }}</span>
+                <span class="sep">•</span>
+                {% endif %}
+                <a href="/editorial-policy">Editorial standards</a>
+            </div>
+
+            <!-- SOCIAL LINKS -->
+            {% if author.social %}
+            <div class="author-social">
+
+                {% if author.social.twitter %}
+                <a href="{{ author.social.twitter }}" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon twitter"></span>
+                </a>
+                {% endif %}
+
+                {% if author.social.linkedin %}
+                <a href="{{ author.social.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <span class="icon linkedin"></span>
+                </a>
+                {% endif %}
+
+                {% if author.social.github %}
+                <a href="{{ author.social.github }}" target="_blank" rel="noopener" aria-label="GitHub">
+                    <span class="icon github"></span>
+                </a>
+                {% endif %}
+
+                {% if author.website %}
+                <a href="{{ author.website }}" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon link"></span>
+                </a>
+                {% endif %}
+
+                {% if author.email %}
+                <a href="mailto:{{ author.email }}" aria-label="Email">
+                    <span class="icon mail"></span>
+                </a>
+                {% endif %}
+
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <!-- AUTHOR DETAILS -->
+    <section class="author-details">
+
+        {% if author.expertise %}
+        <div class="author-card">
+            <h2>Areas of coverage</h2>
+            <ul>
+                {% for topic in author.expertise %}
+                <li>{{ topic }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if author.bio %}
+        <div class="author-card">
+            <h2>Experience</h2>
+            <p>
+                {{ author.bio }}
+            </p>
+        </div>
+        {% endif %}
+
+        <div class="author-card">
+            <h2>At Today’s US</h2>
+            <ul class="author-stats">
+                <li><strong>Articles published:</strong> {{ article_count }}</li>
+                <li><strong>Joined:</strong> {{ author.created_at.strftime('%B %Y') }}</li>
+            </ul>
+        </div>
+
+    </section>
+
+    <!-- LATEST ARTICLES -->
+    <section class="author-articles">
+        <h2>Latest articles</h2>
+
+        <div class="author-article-list">
+
+            {% for a in articles %}
+            <article class="author-article">
+
+                <h3>
+                    <a href="/{{ a.category.slug }}/{{ a.slug }}">
+                        {{ a.title }}
+                    </a>
+                </h3>
+
+                <p>{{ a.excerpt }}</p>
+
+                <span class="article-meta">
+                    {{ a.type | capitalize }} •
+                    {{ a.published_at.strftime('%b %d, %Y') }}
+                </span>
+
+            </article>
+            {% endfor %}
+
+            {% if not articles %}
+            <p>No published articles yet.</p>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="author-contact">
+        <p>
+            Contact the newsroom via our <a href="/contact">Contact page</a>.
+            For corrections, see our <a href="/corrections">Corrections policy</a>.
+        </p>
+    </section>
+
+</main>
+
+{% include "partials/footer.html" %}
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

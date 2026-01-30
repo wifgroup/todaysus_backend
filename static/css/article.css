@@ -111,9 +111,30 @@ ARTICLE PAGE STYLES
 .author-box {
   margin-top: 40px;
   padding: 20px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border);  
   border-radius: var(--radius);
   background: var(--surface);
+}
+
+.author-box-inner {
+  display: flex;
+  gap: 1rem;
+}
+
+.author-box-avatar img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-box-content h4 {
+  margin: 0;
+}
+
+.author-box-links a {
+  margin-right: 10px;
+  font-size: 0.9rem;
 }
 
 /* SIDEBAR */

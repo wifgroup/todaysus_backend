@@ -4,13 +4,21 @@ from db.mongo import mongo
 
 sitemap_bp = Blueprint("sitemap", __name__)
 
-BASE_URL = "https://www.todaysus.com/"
-
+BASE_URL = "https://www.todaysus.com"
+static_pages = [
+    "about",
+    "contact",
+    "editorial-policy",
+    "ethics",
+    "corrections",
+    "privacy-policy",
+    "terms-of-use"
+]
 
 @sitemap_bp.route("/sitemap.xml", methods=["GET"])
 def sitemap():
     urls = []
-    BASE_URL = "https://www.todaysus.com/"
+    # BASE_URL = "https://www.todaysus.com"
 
     # ---------- Home ----------
     urls.append({
@@ -19,6 +27,14 @@ def sitemap():
         "changefreq": "daily",
         "priority": "1.0"
     })
+    
+    for page in static_pages:
+        urls.append({
+            "loc": f"{BASE_URL}/{page}",
+            "lastmod": datetime.utcnow().date(),
+            "changefreq": "monthly",
+            "priority": "0.5"
+        })
 
     # ---------- Categories ----------
     category_slugs = set()
@@ -86,14 +102,14 @@ def sitemap():
 
 @sitemap_bp.route("/news-sitemap.xml", methods=["GET"])
 def news_sitemap():
-    BASE_URL = "https://www.todaysus.com/"
+    # BASE_URL = "https://www.todaysus.com"
 
     articles = mongo.db.articles.find(
         {
             "status": "published",
             "is_deleted": False,
             "published_at": {
-                "$gte": datetime.utcnow() - timedelta(days=2)
+                "$gte": datetime.utcnow() - timedelta(days=7)
             }
         }
     ).sort("published_at", -1).limit(100)

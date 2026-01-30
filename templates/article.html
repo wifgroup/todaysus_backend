@@ -42,8 +42,9 @@
       "articleSection": "{{ article.category.name }}",
       "author": {
         "@type": "Person",
-        "name": "{{ article.author.name }}",
-        "url": "https://todaysus.com/author/{{ article.author.name }}"
+        "name": "{{ author.display_name if author else 'Today’s US Editorial Desk' }}",
+        "url": "{% if author %}https://todaysus.com/authors/{{ author.slug }}{% endif %}"
+
       },
       "publisher": {
         "@type": "NewsMediaOrganization",
@@ -149,7 +150,14 @@
                     <p class="article-deck">{{ article.excerpt }}</p>
 
                     <div class="article-meta">
-                        <span class="author">By {{ article.author.name }}</span>
+                        <!-- <span class="author">By {{ article.author.name }}</span> -->
+                        <span class="author">
+                            By
+                            <a href="/authors/{{ author.slug }}" rel="author" class="author-link">
+                                {{ article.author.name }}
+                            </a>
+                        </span>
+
                         <span class="sep">•</span>
                         <time datetime="{{ article.published_at }}">
                             {{ article.published_at.strftime('%B %d, %Y') }}
@@ -162,10 +170,15 @@
                     </div>
                 </header>
 
+                {% if article.featured_image %}
                 <figure class="article-figure">
-                    <img src="/static/images/{{ article.featured_image }}" alt="{{ article.image_caption }}">
+                    <img src="/static/images/{{ article.featured_image }}"
+                        alt="{{ article.image_caption or article.title }}" loading="lazy">
+                    {% if article.image_caption %}
                     <figcaption>{{ article.image_caption }}</figcaption>
+                    {% endif %}
                 </figure>
+                {% endif %}
 
                 <!-- KEY TAKEAWAYS -->
                 {% if article.key_takeaways %}
@@ -192,14 +205,78 @@
                     </div>
                 </footer>
 
-                <section class="author-box">
+                <!-- <section class="author-box">
                     <h3>About the author</h3>
                     <p>
                         {{ article.author.bio if article.author.bio else
                         "The Today’s US Editorial Desk publishes reporting and analysis produced collaboratively by the
                         newsroom." }}
                     </p>
+                </section> -->
+                <section class="author-box">
+
+                    <h3>About the author</h3>
+
+                    {% if author %}
+                    <div class="author-box-inner">
+
+                        <div class="author-box-avatar">
+                            {% if author.photo and author.photo.url %}
+                            <img src="{{ author.photo.url }}" alt="{{ author.photo.alt or author.display_name }}">
+                            {% else %}
+                            <div class="avatar-placeholder">
+                                {{ author.display_name[:1] }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="author-box-content">
+
+                            <h4>
+                                <a href="/authors/{{ author.slug }}">
+                                    {{ author.display_name }}
+                                </a>
+                            </h4>
+
+                            {% if author.role %}
+                            <p class="author-role">{{ author.role }}</p>
+                            {% endif %}
+
+                            {% if author.short_bio %}
+                            <p class="author-bio">
+                                {{ author.short_bio }}
+                            </p>
+                            {% endif %}
+
+                            <div class="author-box-links">
+
+                                <a href="/authors/{{ author.slug }}" class="author-profile-link">
+                                    View full profile →
+                                </a>
+
+                                {% if author.social %}
+                                {% if author.social.twitter %}
+                                <a href="{{ author.social.twitter }}" target="_blank" aria-label="Twitter">𝕏</a>
+                                {% endif %}
+                                {% if author.social.linkedin %}
+                                <a href="{{ author.social.linkedin }}" target="_blank" aria-label="LinkedIn">in</a>
+                                {% endif %}
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <p>
+                        The Today’s US Editorial Desk publishes reporting and analysis produced collaboratively by the
+                        newsroom.
+                    </p>
+                    {% endif %}
+
                 </section>
+
 
                 <section class="article-newsletter">
                     <h3>Stay informed</h3>

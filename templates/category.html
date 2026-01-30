@@ -18,6 +18,17 @@
 
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/category.css" />
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ category.name }}",
+  "description": "{{ category.description }}",
+  "url": "https://todaysus.com/{{ category.slug }}"
+}
+</script>
+
 </head>
 
 <body>
@@ -133,10 +144,10 @@
                         <span class="stream-meta">
                             {{ a.type | capitalize }} •
                             {% if a.published_at %}
-    {{ a.published_at.strftime('%b %d, %Y') }}
-{% else %}
-    {{ a.created_at.strftime('%b %d, %Y') }}
-{% endif %}
+                            {{ a.published_at.strftime('%b %d, %Y') }}
+                            {% else %}
+                            {{ a.created_at.strftime('%b %d, %Y') }}
+                            {% endif %}
 
                         </span>
                     </article>

@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
 from flask import Flask, abort, redirect, request
 from config import Config
 from db.mongo import mongo
@@ -9,10 +13,9 @@ from routes.topic_routes import topic_bp
 from routes.subscriber_routes import subscriber_bp
 from routes.contact_api import contact_bp
 from routes.sitemap import sitemap_bp
-from dotenv import load_dotenv
-import os
+from routes.admin_authors import admin_authors_bp
 
-load_dotenv()
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -71,9 +74,9 @@ app.register_blueprint(contact_bp)
 
 app.register_blueprint(subscriber_bp)
 
-
 app.register_blueprint(sitemap_bp)
 
+app.register_blueprint(admin_authors_bp)
 
 
 if __name__ == "__main__":
