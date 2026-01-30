@@ -1,4 +1,4 @@
-from flask import Blueprint, Response
+from flask import Blueprint, Response, send_from_directory
 from datetime import datetime, timedelta
 from db.mongo import mongo
 
@@ -124,3 +124,7 @@ def news_sitemap():
     xml.append("</urlset>")
 
     return Response("\n".join(xml), mimetype="application/xml")
+
+@sitemap_bp.route("/robots.txt")
+def robots_txt():
+    return send_from_directory("static", "robots.txt", mimetype="text/plain")

@@ -1,0 +1,116 @@
+# ================================
+# Today’s US – Robots.txt
+# Independent U.S. Newsroom
+# ================================
+
+# ----------------
+# GLOBAL RULES
+# ----------------
+User-agent: *
+Allow: /
+
+# Block internal APIs & admin
+Disallow: /api/
+Disallow: /api/v1/
+Disallow: /admin/
+Disallow: /_internal/
+Disallow: /debug/
+Disallow: /private/
+
+# Block error & utility pages
+Disallow: /404
+Disallow: /404.html
+Disallow: /search
+Disallow: /*?*
+
+# ----------------
+# GOOGLE
+# ----------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+# ----------------
+# BING / YAHOO
+# ----------------
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# ----------------
+# DUCKDUCKGO
+# ----------------
+User-agent: DuckDuckBot
+Allow: /
+
+# ----------------
+# APPLE
+# ----------------
+User-agent: Applebot
+Allow: /
+
+# ----------------
+# AI CRAWLERS (VERY IMPORTANT)
+# ----------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# ----------------
+# SOCIAL MEDIA PREVIEWS
+# ----------------
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# ----------------
+# PERFORMANCE CONTROL
+# ----------------
+Crawl-delay: 3
+
+# ----------------
+# SITEMAPS
+# ----------------
+Sitemap: https://todaysus.com/sitemap.xml
+Sitemap: https://todaysus.com/news-sitemap.xml
