@@ -38,7 +38,7 @@ def sitemap():
         })
         
     # ---------- Static Pages ----------
-    authors = mongo.db.author.find(
+    authors = mongo.db.authors.find(
         {
             
             "is_active": True
