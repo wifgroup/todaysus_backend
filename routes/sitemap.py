@@ -1,6 +1,40 @@
 from flask import Blueprint, Response, send_from_directory
 from datetime import datetime, timedelta
 from db.mongo import mongo
+from dateutil import parser
+
+from dateutil import parser
+
+def normalize_datetime(value):
+    """
+    Returns a datetime object safely
+    """
+    if isinstance(value, str):
+        return parser.parse(value)
+    if isinstance(value, datetime):
+        return value
+    return None
+
+
+def article_pub_datetime(article):
+    """
+    Google News–safe publication datetime
+    """
+    return (
+        normalize_datetime(article.get("published_at"))
+        or normalize_datetime(article.get("updated_at"))
+        or normalize_datetime(article.get("created_at"))
+        or datetime.utcnow()
+    )
+
+
+def safe_date(value):
+    if isinstance(value, str):
+        value = parser.parse(value)
+    if isinstance(value, datetime):
+        return value.date()
+    return datetime.utcnow().date()
+
 
 sitemap_bp = Blueprint("sitemap", __name__)
 
@@ -84,6 +118,42 @@ def sitemap():
             "priority": "0.8"
         })
 
+        # ---------- TRENDING TOPICS ----------
+
+    trending_topics = mongo.db.articles.aggregate([
+        {
+            "$match": {
+                "status": "published",
+                "is_deleted": False,
+                "topics": {"$exists": True, "$ne": []}
+            }
+        },
+        {"$unwind": "$topics"},
+        {
+            "$group": {
+                "_id": "$topics.slug",
+                "article_count": {"$sum": 1},
+                "last_published": {"$max": "$published_at"}
+            }
+        },
+        {"$sort": {"article_count": -1}},   # most articles first
+        {"$limit": 25}                       # ONLY TOP 25 TOPICS
+    ])
+
+    for topic in trending_topics:
+        if not topic["_id"]:
+            continue
+
+        urls.append({
+            "loc": f"{BASE_URL}/topics/{topic['_id']}",
+            "lastmod": 
+                safe_date(topic.get("last_published"))
+                ,
+            "changefreq": "daily",
+            "priority": "0.7"
+        })
+
+    
     # ---------- Articles ----------
     for article in articles_list:
         slug = article.get("slug")
@@ -123,21 +193,22 @@ def sitemap():
 
 @sitemap_bp.route("/news-sitemap.xml", methods=["GET"])
 def news_sitemap():
-    # BASE_URL = "https://www.todaysus.com"
 
     articles = mongo.db.articles.find(
         {
             "status": "published",
             "is_deleted": False,
-            "published_at": {
+            "updated_at": {
                 "$gte": datetime.utcnow() - timedelta(days=7)
             }
         }
-    ).sort("published_at", -1).limit(100)
+    ).sort("updated_at", -1).limit(100)
 
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
-               'xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">')
+    xml.append(
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">'
+    )
 
     for article in articles:
         category = article.get("category", {}).get("slug")
@@ -146,6 +217,8 @@ def news_sitemap():
         if not category or not slug:
             continue
 
+        pub_date = article_pub_datetime(article)
+
         xml.append("<url>")
         xml.append(f"<loc>{BASE_URL}/{category}/{slug}</loc>")
         xml.append("<news:news>")
@@ -153,7 +226,9 @@ def news_sitemap():
         xml.append("<news:name>Todays US</news:name>")
         xml.append("<news:language>en</news:language>")
         xml.append("</news:publication>")
-        xml.append(f"<news:publication_date>{article['published_at'].isoformat()}</news:publication_date>")
+        xml.append(
+            f"<news:publication_date>{pub_date.isoformat()}</news:publication_date>"
+        )
         xml.append(f"<news:title>{article['title']}</news:title>")
         xml.append("</news:news>")
         xml.append("</url>")
