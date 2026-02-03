@@ -42,17 +42,28 @@ ARTICLE PAGE STYLES
 
 /* IMAGE */
 .article-figure {
-  margin: 32px 0;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  text-align: center;
+}
+
+.article-figure img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  /* optional, looks premium */
+  object-fit: contain;
+  /* prevents cropping */
 }
 
 .image-placeholder {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(
-    135deg,
-    rgba(0,80,160,0.15),
-    rgba(0,80,160,0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(0, 80, 160, 0.15),
+      rgba(0, 80, 160, 0.05));
   border-radius: var(--radius);
   display: flex;
   align-items: center;
@@ -111,7 +122,7 @@ ARTICLE PAGE STYLES
 .author-box {
   margin-top: 40px;
   padding: 20px;
-  border: 1px solid var(--border);  
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
 }
@@ -183,12 +194,10 @@ ARTICLE PAGE STYLES
 
 /* SIDEBAR SUBSCRIBE */
 .sidebar-subscribe {
-  background: linear-gradient(
-    135deg,
-    rgba(0,80,160,0.12),
-    rgba(0,80,160,0.04)
-  );
-  border-color: rgba(0,80,160,0.25);
+  background: linear-gradient(135deg,
+      rgba(0, 80, 160, 0.12),
+      rgba(0, 80, 160, 0.04));
+  border-color: rgba(0, 80, 160, 0.25);
 }
 
 .subscribe-text {
@@ -301,11 +310,9 @@ ARTICLE PAGE STYLES
 .coverage-card {
   padding: 22px;
   border-radius: var(--radius);
-  background: linear-gradient(
-    180deg,
-    var(--surface),
-    var(--surface-2)
-  );
+  background: linear-gradient(180deg,
+      var(--surface),
+      var(--surface-2));
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -381,9 +388,7 @@ ARTICLE PAGE STYLES
   margin-top: 60px;
   padding: 28px;
   border-radius: var(--radius);
-  background: linear-gradient(
-    135deg,
-    rgba(0,80,160,0.12),
-    rgba(0,80,160,0.04)
-  );
+  background: linear-gradient(135deg,
+      rgba(0, 80, 160, 0.12),
+      rgba(0, 80, 160, 0.04));
 }
