@@ -57,6 +57,16 @@
     <link rel="preload" href="/static/css/style.css" as="style">
     <link rel="stylesheet" href="/static/css/style.css">
 
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B3V4WGPYVP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-B3V4WGPYVP');
+    </script>
     <!-- ================= ORGANIZATION SCHEMA ================= -->
     <script type="application/ld+json">
     {
@@ -404,7 +414,7 @@
 
     </main>
 
-     {% include "partials/footer.html" %}
+    {% include "partials/footer.html" %}
 
     <script src="/static/js/script.js"></script>
 </body>
