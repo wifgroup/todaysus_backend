@@ -104,10 +104,7 @@ Allow: /
 User-agent: TelegramBot
 Allow: /
 
-# ----------------
-# PERFORMANCE CONTROL
-# ----------------
-Crawl-delay: 3
+
 
 # ----------------
 # SITEMAPS
