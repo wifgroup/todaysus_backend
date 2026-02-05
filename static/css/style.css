@@ -127,6 +127,12 @@ a:hover {
   font-size: .9rem;
 }
 
+.brand-logo {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -151,6 +157,10 @@ a:hover {
 .nav a.nav-cta:hover {
   filter: brightness(1.06);
   text-decoration: none;
+}
+
+html.theme-dark .brand-logo {
+  filter: brightness(1.15);
 }
 
 /* Mobile menu button */
@@ -683,6 +693,45 @@ TODAY’S BRIEFING (HERO)
 .disclaimer {
   font-weight: 700;
 }
+
+/* Footer brand */
+.footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.footer-brand-link:hover {
+  text-decoration: none;
+}
+
+.footer-logo-img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
+/* Dark mode polish */
+html.theme-dark .footer-logo-img {
+  filter: brightness(1.15);
+}
+
+.footer-logo-text {
+  line-height: 1;
+}
+
+.footer-desc {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 36ch;
+}
+
+
 
 /* Screen reader only */
 .sr-only {
@@ -1271,12 +1320,10 @@ MOST READ — REFINED
 .most-read-spotlight.refined {
   padding: 26px;
   border-radius: calc(var(--radius) + 2px);
-  background: linear-gradient(
-    135deg,
-    rgba(0,80,160,0.14),
-    rgba(0,80,160,0.04)
-  );
-  border: 1px solid rgba(0,80,160,0.25);
+  background: linear-gradient(135deg,
+      rgba(0, 80, 160, 0.14),
+      rgba(0, 80, 160, 0.04));
+  border: 1px solid rgba(0, 80, 160, 0.25);
   box-shadow: var(--shadow-soft);
 }
 

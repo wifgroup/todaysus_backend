@@ -97,44 +97,7 @@
 
 <body>
 
-    <!-- CONTEXT BAR -->
-    <div class="context-bar">
-        <div class="container context-inner">
-            <div class="context-left">
-                <time>{{ article.published_at.strftime('%A, %B %d, %Y') }}</time>
-                <span class="sep">•</span>
-                <span>United States</span>
-                <span class="sep">•</span>
-                <span class="status">Developing coverage</span>
-            </div>
-
-            <div class="context-right">
-                <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="header" role="banner">
-        <div class="container header-inner">
-            <div class="brand">
-                <a class="brand-link" href="/" aria-label="Today’s US home">
-                    <span class="brand-name">Today’s US</span>
-                </a>
-                <p class="brand-tag">U.S. News • Politics • Business • Tech</p>
-            </div>
-
-            <nav class="nav" aria-label="Primary">
-                <a href="/news">News</a>
-                <a href="/politics">Politics</a>
-                <a href="/business">Business</a>
-                <a href="/technology">Technology</a>
-                <a href="/world">World</a>
-                <a href="/opinion">Opinion</a>
-                <a class="nav-cta" href="#subscribe">Get Updates</a>
-            </nav>
-        </div>
-    </header>
+   {% include "partials/header.html" %}
 
     <main class="article-main container">
 
@@ -373,34 +336,8 @@
 
     </main>
 
-    <footer class="footer" role="contentinfo">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <div class="footer-logo">Today’s US</div>
-                <p>Independent American newsroom focused on clarity, context, and verified reporting.</p>
-            </div>
+  {% include "partials/footer.html" %}
 
-            <div class="footer-links">
-                <h3>Company</h3>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/editorial-policy">Editorial policy</a>
-                <a href="/corrections">Corrections</a>
-            </div>
-
-            <div class="footer-links">
-                <h3>Legal</h3>
-                <a href="/privacy-policy">Privacy policy</a>
-                <a href="/terms-of-use">Terms of use</a>
-                <a href="/ethics">Ethics</a>
-            </div>
-
-            <div class="footer-meta">
-                <p class="disclaimer">Not affiliated with any other media outlet.</p>
-                <small>© {{ current_year }} Today’s US</small>
-            </div>
-        </div>
-    </footer>
 
     <script src="/static/js/script.js"></script>
 </body>

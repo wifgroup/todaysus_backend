@@ -1,65 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Today’s US – Independent U.S. News & Analysis</title>
+    <!-- ================= BASIC META ================= -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Today’s US | Independent U.S. News, Politics & Analysis</title>
 
     <meta name="description"
-        content="Today’s US is an independent American newsroom delivering clear reporting and analysis on U.S. politics, business, technology, and society." />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://todaysus.com/" />
+        content="Today’s US is an independent American newsroom delivering breaking U.S. news, political coverage, business insights, technology updates, and expert analysis.">
 
-    <meta property="og:site_name" content="Today’s US" />
-    <meta property="og:title" content="Today’s US – Independent U.S. News & Analysis" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ================= INDEXING & CRAWLING ================= -->
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- ================= CANONICAL ================= -->
+    <link rel="canonical" href="https://todaysus.com/">
+
+    <!-- ================= GOOGLE NEWS ================= -->
+    <meta name="news_keywords"
+        content="U.S. News, American Politics, White House, Congress, Economy, Technology, Business News">
+
+    <!-- ================= OPEN GRAPH ================= -->
+    <meta property="og:site_name" content="Today’s US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Today’s US | Independent U.S. News & Analysis">
     <meta property="og:description"
-        content="Clear reporting and analysis on U.S. politics, business, technology, and society." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://todaysus.com/" />
+        content="Independent U.S. journalism covering politics, business, technology, and society.">
+    <meta property="og:url" content="https://todaysus.com/">
+    <meta property="og:image" content="https://todaysus.com/static/images/logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
 
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <!-- ================= TWITTER ================= -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Today’s US | Independent U.S. News & Analysis">
+    <meta name="twitter:description"
+        content="Breaking U.S. news and in-depth reporting on politics, business, and technology.">
+    <meta name="twitter:image" content="https://todaysus.com/static/images/logo.png">
+    <meta name="twitter:site" content="@TodaysUS">
+
+    <!-- ================= BRAND SIGNALS ================= -->
+    <meta name="author" content="Today’s US Editorial Team">
+    <meta name="publisher" content="Today’s US">
+    <meta name="theme-color" content="#ff2525">
+
+    <!-- ================= FAVICON ================= -->
+    <link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
+
+    <!-- ================= PERFORMANCE ================= -->
+    <link rel="preload" href="/static/css/style.css" as="style">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- ================= ORGANIZATION SCHEMA ================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsMediaOrganization",
+      "name": "Today’s US",
+      "url": "https://todaysus.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://todaysus.com/static/images/logo.png",
+        "width": 512,
+        "height": 512
+      }
+    }
+    </script>
+
+    <!-- ================= WEBSITE SCHEMA ================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Today’s US",
+      "url": "https://todaysus.com/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Today’s US"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://todaysus.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
 </head>
+
 
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- CONTEXT BAR -->
-    <div class="context-bar">
-        <div class="container context-inner">
-            <div class="context-left">
-                <time id="currentDate"></time>
-                <span class="sep">•</span>
-                <span>United States</span>
-                <span class="sep">•</span>
-                <span class="status">Developing coverage</span>
-            </div>
-            <div class="context-right">
-                <button class="icon-btn" id="themeToggle">☾</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- HEADER -->
-    <header class="header">
-        <div class="container header-inner">
-            <div class="brand">
-                <a class="brand-link" href="/">
-                    <span class="brand-name">Today’s US</span>
-                </a>
-                <p class="brand-tag">U.S. News • Politics • Business • Tech</p>
-            </div>
-
-            <nav class="nav">
-                <a href="/news">News</a>
-                <a href="/politics">Politics</a>
-                <a href="/business">Business</a>
-                <a href="/technology">Technology</a>
-                <a href="/world">World</a>
-                <a href="/opinion">Opinion</a>
-            </nav>
-        </div>
-    </header>
+    {% include "partials/header.html" %}
 
     <main id="main">
 
@@ -365,35 +404,7 @@
 
     </main>
 
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <div class="footer-logo">Today’s US</div>
-                <p>Independent American newsroom focused on clarity, context, and verified reporting.</p>
-            </div>
-
-            <div class="footer-links">
-                <h3>Company</h3>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/editorial-policy">Editorial policy</a>
-                <a href="/corrections">Corrections</a>
-            </div>
-
-            <div class="footer-links">
-                <h3>Legal</h3>
-                <a href="/privacy-policy">Privacy policy</a>
-                <a href="/terms-of-use">Terms of use</a>
-                <a href="/ethics">Ethics</a>
-            </div>
-
-            <div class="footer-meta">
-                <p class="disclaimer">Not affiliated with any other media outlet.</p>
-
-                <small>© {{ current_year }} Today’s US</small>
-            </div>
-        </div>
-    </footer>
+     {% include "partials/footer.html" %}
 
     <script src="/static/js/script.js"></script>
 </body>
