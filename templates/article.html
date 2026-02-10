@@ -9,7 +9,8 @@
     <meta name="description" content="{{ article.seo_description }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-
+    <!-- ================= FAVICON ================= -->
+    <link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
     <!-- Canonical -->
     <link rel="canonical" href="{{ canonical_url }}" />
 
@@ -97,7 +98,7 @@
 
 <body>
 
-   {% include "partials/header.html" %}
+    {% include "partials/header.html" %}
 
     <main class="article-main container">
 
@@ -336,7 +337,7 @@
 
     </main>
 
-  {% include "partials/footer.html" %}
+    {% include "partials/footer.html" %}
 
 
     <script src="/static/js/script.js"></script>

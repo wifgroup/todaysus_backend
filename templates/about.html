@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>{{ page.seo_title }}</title>
@@ -9,7 +10,8 @@
   <meta name="robots" content="index, follow" />
 
   <link rel="canonical" href="https://todaysus.com/about" />
-
+  <!-- ================= FAVICON ================= -->
+  <link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ page.seo_title }}" />
   <meta property="og:description" content="{{ page.seo_description }}" />
@@ -20,75 +22,76 @@
 </head>
 
 <body>
-{% include "partials/header.html" %}
+  {% include "partials/header.html" %}
 
-<main class="about-main container">
+  <main class="about-main container">
 
-  <!-- HERO -->
-  <section class="about-hero">
-    <span class="about-kicker">{{ page.content.hero.kicker }}</span>
-    <h1>{{ page.content.hero.headline }}</h1>
-    <p class="about-lead">{{ page.content.hero.lead }}</p>
-  </section>
+    <!-- HERO -->
+    <section class="about-hero">
+      <span class="about-kicker">{{ page.content.hero.kicker }}</span>
+      <h1>{{ page.content.hero.headline }}</h1>
+      <p class="about-lead">{{ page.content.hero.lead }}</p>
+    </section>
 
-  <!-- TWO COLUMN INTRO -->
-  <section class="about-intro">
-    <div>
-      <h2>{{ page.content.intro.left_title }}</h2>
-      <p>{{ page.content.intro.left_text }}</p>
-    </div>
-
-    <div>
-      <h2>{{ page.content.intro.right_title }}</h2>
-      <p>{{ page.content.intro.right_text }}</p>
-    </div>
-  </section>
-
-  <!-- COVERAGE AREAS (DYNAMIC) -->
-  <section class="about-coverage">
-    <h2>Our coverage</h2>
-
-    <div class="coverage-cards">
-      {% for c in categories %}
-      <div class="coverage-card">
-        <h3>{{ c.name }}</h3>
-        <p>{{ c.description }}</p>
+    <!-- TWO COLUMN INTRO -->
+    <section class="about-intro">
+      <div>
+        <h2>{{ page.content.intro.left_title }}</h2>
+        <p>{{ page.content.intro.left_text }}</p>
       </div>
-      {% endfor %}
-    </div>
-  </section>
 
-  <!-- EDITORIAL PRINCIPLES -->
-  <section class="about-principles">
-    <div class="principles-box">
-      <h2>How we work</h2>
-      <ul>
-        {% for p in page.content.principles %}
-        <li>{{ p }}</li>
+      <div>
+        <h2>{{ page.content.intro.right_title }}</h2>
+        <p>{{ page.content.intro.right_text }}</p>
+      </div>
+    </section>
+
+    <!-- COVERAGE AREAS (DYNAMIC) -->
+    <section class="about-coverage">
+      <h2>Our coverage</h2>
+
+      <div class="coverage-cards">
+        {% for c in categories %}
+        <div class="coverage-card">
+          <h3>{{ c.name }}</h3>
+          <p>{{ c.description }}</p>
+        </div>
         {% endfor %}
-      </ul>
+      </div>
+    </section>
 
-      <p class="principles-link">
-        Read our full <a href="/editorial-policy">Editorial Policy</a>.
-      </p>
-    </div>
-  </section>
+    <!-- EDITORIAL PRINCIPLES -->
+    <section class="about-principles">
+      <div class="principles-box">
+        <h2>How we work</h2>
+        <ul>
+          {% for p in page.content.principles %}
+          <li>{{ p }}</li>
+          {% endfor %}
+        </ul>
 
-  <!-- INDEPENDENCE -->
-  <section class="about-independence">
-    <h2>Independence</h2>
-    <p>{{ page.content.independence }}</p>
-  </section>
+        <p class="principles-link">
+          Read our full <a href="/editorial-policy">Editorial Policy</a>.
+        </p>
+      </div>
+    </section>
 
-  <!-- CONTACT CTA -->
-  <section class="about-contact">
-    <h2>Contact us</h2>
-    <p>{{ page.content.contact_text | safe }}</p>
-  </section>
+    <!-- INDEPENDENCE -->
+    <section class="about-independence">
+      <h2>Independence</h2>
+      <p>{{ page.content.independence }}</p>
+    </section>
 
-</main>
+    <!-- CONTACT CTA -->
+    <section class="about-contact">
+      <h2>Contact us</h2>
+      <p>{{ page.content.contact_text | safe }}</p>
+    </section>
 
-{% include "partials/footer.html" %}
- <script src="/static/js/script.js"></script>
+  </main>
+
+  {% include "partials/footer.html" %}
+  <script src="/static/js/script.js"></script>
 </body>
+
 </html>

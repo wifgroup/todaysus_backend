@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>{{ seo_title }}</title>
@@ -7,7 +8,8 @@
     <meta name="description" content="{{ seo_description }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-
+    <!-- ================= FAVICON ================= -->
+    <link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
     <link rel="canonical" href="{{ canonical_url }}" />
 
     <link rel="stylesheet" href="/static/css/style.css" />
@@ -16,107 +18,108 @@
 
 <body>
 
-{% include "partials/header.html" %}
+    {% include "partials/header.html" %}
 
-<main class="contact-main container">
+    <main class="contact-main container">
 
-    <!-- HERO -->
-    <section class="contact-hero">
-        <span class="contact-kicker">Contact</span>
-        <h1>Reach the newsroom</h1>
-        <p class="contact-lead">
-            Today’s US is an independent newsroom.
-            We welcome feedback, corrections, and editorial inquiries.
-        </p>
-    </section>
+        <!-- HERO -->
+        <section class="contact-hero">
+            <span class="contact-kicker">Contact</span>
+            <h1>Reach the newsroom</h1>
+            <p class="contact-lead">
+                Today’s US is an independent newsroom.
+                We welcome feedback, corrections, and editorial inquiries.
+            </p>
+        </section>
 
-    <!-- CONTACT PATHS -->
-    <section class="contact-paths">
+        <!-- CONTACT PATHS -->
+        <section class="contact-paths">
 
-        <article class="contact-card primary">
-            <h2>Editorial & reporting</h2>
-            <p>Questions about coverage, story ideas, feedback, or newsroom practices.</p>
-            <a href="mailto:editorial@todaysus.com" class="contact-link">
-                editorial@todaysus.com →
-            </a>
-        </article>
+            <article class="contact-card primary">
+                <h2>Editorial & reporting</h2>
+                <p>Questions about coverage, story ideas, feedback, or newsroom practices.</p>
+                <a href="mailto:editorial@todaysus.com" class="contact-link">
+                    editorial@todaysus.com →
+                </a>
+            </article>
 
-        <article class="contact-card">
-            <h2>Report a correction</h2>
+            <article class="contact-card">
+                <h2>Report a correction</h2>
+                <p>
+                    If you believe an article contains an error, please include a link
+                    and a brief explanation.
+                </p>
+                <a href="mailto:corrections@todaysus.com" class="contact-link">
+                    corrections@todaysus.com →
+                </a>
+                <p class="contact-meta">
+                    See our <a href="/corrections">Corrections policy</a>.
+                </p>
+            </article>
+
+            <article class="contact-card">
+                <h2>General inquiries</h2>
+                <p>Non-editorial questions or general site feedback.</p>
+                <a href="mailto:contact@todaysus.com" class="contact-link">
+                    contact@todaysus.com →
+                </a>
+            </article>
+
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section class="contact-form-section">
+            <div class="form-intro">
+                <h2>Send a message</h2>
+                <p>
+                    Use this form if email isn’t convenient.
+                    Messages are reviewed by our editorial team.
+                </p>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-grid">
+                    <div>
+                        <label>Name</label>
+                        <input type="text" name="name" required />
+                    </div>
+
+                    <div>
+                        <label>Email</label>
+                        <input type="email" name="email" required />
+                    </div>
+                </div>
+
+                <div>
+                    <label>Message</label>
+                    <textarea name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Send message
+                </button>
+
+                <!-- ✅ ALWAYS present -->
+                <p class="form-note" aria-live="polite"></p>
+            </form>
+
+        </section>
+
+        <!-- TRUST LINKS -->
+        <section class="contact-trust">
             <p>
-                If you believe an article contains an error, please include a link
-                and a brief explanation.
+                Learn how we report and correct the news:
+                <a href="/editorial-policy">Editorial Policy</a> ·
+                <a href="/corrections">Corrections</a>
             </p>
-            <a href="mailto:corrections@todaysus.com" class="contact-link">
-                corrections@todaysus.com →
-            </a>
-            <p class="contact-meta">
-                See our <a href="/corrections">Corrections policy</a>.
-            </p>
-        </article>
+        </section>
 
-        <article class="contact-card">
-            <h2>General inquiries</h2>
-            <p>Non-editorial questions or general site feedback.</p>
-            <a href="mailto:contact@todaysus.com" class="contact-link">
-                contact@todaysus.com →
-            </a>
-        </article>
+    </main>
 
-    </section>
+    {% include "partials/footer.html" %}
 
-    <!-- CONTACT FORM -->
-    <section class="contact-form-section">
-        <div class="form-intro">
-            <h2>Send a message</h2>
-            <p>
-                Use this form if email isn’t convenient.
-                Messages are reviewed by our editorial team.
-            </p>
-        </div>
-
-       <form class="contact-form" id="contactForm">
-    <div class="form-grid">
-        <div>
-            <label>Name</label>
-            <input type="text" name="name" required />
-        </div>
-
-        <div>
-            <label>Email</label>
-            <input type="email" name="email" required />
-        </div>
-    </div>
-
-    <div>
-        <label>Message</label>
-        <textarea name="message" rows="5" required></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-        Send message
-    </button>
-
-    <!-- ✅ ALWAYS present -->
-    <p class="form-note" aria-live="polite"></p>
-</form>
-
-    </section>
-
-    <!-- TRUST LINKS -->
-    <section class="contact-trust">
-        <p>
-            Learn how we report and correct the news:
-            <a href="/editorial-policy">Editorial Policy</a> ·
-            <a href="/corrections">Corrections</a>
-        </p>
-    </section>
-
-</main>
-
-{% include "partials/footer.html" %}
-
-<script src="/static/js/script.js"></script>
-<script src="/static/js/contact.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/contact.js"></script>
 </body>
+
 </html>
