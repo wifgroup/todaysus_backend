@@ -97,6 +97,7 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   padding: 18px 0;
+  margin: 10px;
   gap: 18px;
 }
 
@@ -171,6 +172,11 @@ html.theme-dark .brand-logo {
   border-radius: 12px;
   padding: 10px 12px;
   cursor: pointer;
+  transition: background .2s ease;
+}
+
+.menu-btn:hover {
+  background: var(--surface-2);
 }
 
 .menu-lines {
@@ -179,6 +185,7 @@ html.theme-dark .brand-logo {
   height: 2px;
   background: var(--text);
   position: relative;
+  transition: all .3s ease;
 }
 
 .menu-lines::before,
@@ -189,6 +196,7 @@ html.theme-dark .brand-logo {
   width: 22px;
   height: 2px;
   background: var(--text);
+  transition: all .3s ease;
 }
 
 .menu-lines::before {
@@ -199,9 +207,32 @@ html.theme-dark .brand-logo {
   top: 7px;
 }
 
+/* Active animation */
+.menu-btn.active .menu-lines {
+  background: transparent;
+}
+
+.menu-btn.active .menu-lines::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.menu-btn.active .menu-lines::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+/* Mobile Nav */
 .mobile-nav {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease;
   border-top: 1px solid var(--border);
   background: var(--surface);
+}
+
+.mobile-nav.open {
+  max-height: 500px;
+  padding: 8px;
 }
 
 .mobile-nav-inner {
@@ -211,12 +242,52 @@ html.theme-dark .brand-logo {
 }
 
 .mobile-nav a {
-  padding: 10px 12px;
-  border: 1px solid var(--border);
+  padding: 12px 14px;
   border-radius: 12px;
-  color: var(--muted);
   font-weight: 600;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  transition: background .2s ease, color .2s ease;
 }
+
+.mobile-nav a:hover {
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Responsive Behavior */
+@media (max-width: 980px) {
+
+  .nav {
+    display: none;
+  }
+
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-inner {
+    padding: 14px 0;
+
+  }
+
+  .brand-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .context-inner {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+}
+
+
 
 /* Buttons */
 .btn {

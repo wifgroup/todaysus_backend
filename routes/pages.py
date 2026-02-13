@@ -517,14 +517,15 @@ def home_page():
                 {**base_query, "category.slug": slug}
             )
             .sort("published_at", -1)
-            .limit(2)
+            .limit(3)
         )
         normalize_articles(items)
         return items
 
     latest_politics = latest_by_category("politics")
     latest_business = latest_by_category("business")
-    latest_technology = latest_by_category("technology")
+    # latest_technology = latest_by_category("technology")
+    latest_news = latest_by_category("news")
 
     # ---------------- MOST READ ---------------- #
     most_read = list(
@@ -585,6 +586,13 @@ def home_page():
         "Clear labeling (News / Analysis / Opinion)"
     ]
 
+    
+    latest_article = mongo.db.articles.find_one(
+        {"status": "published"},
+        sort=[("updated_at", -1)]
+    )
+
+
     # ---------------- RENDER ---------------- #
     return render_template(
         "index.html",
@@ -599,7 +607,7 @@ def home_page():
         # Latest by category
         latest_politics=latest_politics,
         latest_business=latest_business,
-        latest_technology=latest_technology,
+        latest_news=latest_news,
 
         # Most read
         most_read=most_read,
@@ -615,5 +623,52 @@ def home_page():
         coverage_areas=coverage_areas,
         trust_points=trust_points,
 
+        latest_updated_at = latest_article["updated_at"],
         current_year=datetime.utcnow().year
+    )
+
+
+
+@pages_bp.route("/search")
+def search_page():
+
+    query = request.args.get("q", "").strip()
+    page = int(request.args.get("page", 1))
+    limit = 10
+    skip = (page - 1) * limit
+
+    results = []
+    total = 0
+
+    if query:
+        mongo_query = {
+            "$text": {"$search": query},
+            "status": "published",
+            "is_deleted": False
+        }
+
+        cursor = (
+            mongo.db.articles
+            .find(mongo_query, {"score": {"$meta": "textScore"}})
+            .sort([("score", {"$meta": "textScore"})])
+            .skip(skip)
+            .limit(limit)
+        )
+
+        results = list(cursor)
+        total = mongo.db.articles.count_documents(mongo_query)
+
+        normalize_articles(results)
+
+    has_more = total > (page * limit)
+
+    return render_template(
+        "search.html",
+        query=query,
+        results=results,
+        total=total,
+        page=page,
+        has_more=has_more,
+        current_year=datetime.utcnow().year,
+        canonical_url=f"https://todaysus.com/search?q={query}"
     )

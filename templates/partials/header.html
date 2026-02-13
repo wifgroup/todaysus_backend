@@ -18,15 +18,16 @@
 <!-- HEADER -->
 <header class="header" role="banner">
     <div class="container header-inner">
+
+        <!-- Brand -->
         <div class="brand">
             <a class="brand-link" href="/" aria-label="Today’s US home">
                 <img src="/static/images/logo.png" alt="Today’s US logo" class="brand-logo" width="76" height="76"
                     loading="eager" />
-                <!-- <span class="brand-name">Today’s US</span> -->
             </a>
-            <!-- <p class="brand-tag">U.S. News • Politics • Business • Tech</p> -->
         </div>
 
+        <!-- Desktop Nav -->
         <nav class="nav" aria-label="Primary">
             <a href="/news">News</a>
             <a href="/politics">Politics</a>
@@ -36,5 +37,24 @@
             <a href="/opinion">Opinion</a>
             <a class="nav-cta" href="#subscribe">Get Updates</a>
         </nav>
+
+        <!-- Mobile Menu Button -->
+        <button class="menu-btn" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+            <span class="menu-lines"></span>
+        </button>
+
+    </div>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="container mobile-nav-inner">
+            <a href="/news">News</a>
+            <a href="/politics">Politics</a>
+            <a href="/business">Business</a>
+            <a href="/technology">Technology</a>
+            <a href="/world">World</a>
+            <a href="/opinion">Opinion</a>
+            <a class="btn btn-primary" href="#subscribe">Get Updates</a>
+        </div>
     </div>
 </header>

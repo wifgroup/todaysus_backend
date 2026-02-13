@@ -14,6 +14,7 @@ from routes.subscriber_routes import subscriber_bp
 from routes.contact_api import contact_bp
 from routes.sitemap import sitemap_bp
 from routes.admin_authors import admin_authors_bp
+from routes.admin_routes import admin_bp
 
 
 
@@ -77,6 +78,8 @@ app.register_blueprint(subscriber_bp)
 app.register_blueprint(sitemap_bp)
 
 app.register_blueprint(admin_authors_bp)
+
+app.register_blueprint(admin_bp)
 
 
 if __name__ == "__main__":

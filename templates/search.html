@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {% if query %}
+    <title>{{ query }} – Search Results | Today’s US</title>
+    <meta name="description"
+        content="Browse {{ total }} results for '{{ query }}' on Today’s US. Independent reporting on politics, business, technology, and society." />
+    {% else %}
+    <title>Search U.S. News & Analysis | Today’s US</title>
+    <meta name="description"
+        content="Search independent U.S. reporting and analysis on Today’s US covering politics, business, technology, and society." />
+    {% endif %}
+
+    <!-- Robots -->
+    <meta name="robots" content="{% if query and total > 0 %}index, follow{% else %}noindex, follow{% endif %}" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Today’s US" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+
+    {% if query %}
+    <meta property="og:title" content="{{ query }} – Search Results | Today’s US" />
+    <meta property="og:description" content="Explore {{ total }} results for '{{ query }}' on Today’s US." />
+    {% else %}
+    <meta property="og:title" content="Search | Today’s US" />
+    <meta property="og:description" content="Search independent U.S. reporting and analysis on Today’s US." />
+    {% endif %}
+
+    <meta property="og:image" content="https://www.todaysus.com/static/images/og-default.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@TodaysUSNews" />
+    <meta name="twitter:title"
+        content="{% if query %}{{ query }} – Search Results{% else %}Search | Today’s US{% endif %}" />
+    <meta name="twitter:description"
+        content="{% if query %}Browse {{ total }} results for '{{ query }}'.{% else %}Search reporting and analysis on Today’s US.{% endif %}" />
+    <meta name="twitter:image" content="https://www.todaysus.com/static/images/og-default.jpg" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/search.css" />
+
+
+
+    {% if query and total > 0 %}
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SearchResultsPage",
+  "name": "Search results for {{ query }}",
+  "url": "{{ canonical_url }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ total }},
+    "itemListElement": [
+      {% for article in results %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "url": "https://www.todaysus.com/{{ article.category.slug }}/{{ article.slug }}"
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+    {% endif %}
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.todaysus.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.todaysus.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+    {% if query and page == 1 and total > 0 %}
+    <meta name="robots" content="noindex, follow" />
+    {% else %}
+    <meta name="robots" content="noindex, follow" />
+    {% endif %}
+
+    <link rel="preconnect" href="https://www.todaysus.com">
+    <link rel="dns-prefetch" href="https://www.todaysus.com">
+    <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+   {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://www.todaysus.com/"
+   },
+   {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Search"
+   }
+ ]
+}
+</script>
+
+
+</head>
+
+
+<body>
+
+    {% include "partials/header.html" %}
+
+    <main class="search-main section container">
+
+        <header class="search-hero">
+            <h1>
+                {% if query %}
+                Search Results for "{{ query }}"
+                {% else %}
+                Search Today’s US
+                {% endif %}
+            </h1>
+
+            <p class="section-sub">
+                Find reporting and analysis across politics, business, tech, and society.
+            </p>
+
+
+            <form method="get" action="/search" class="search-form" role="search">
+                <label for="search-input" class="sr-only">Search articles</label>
+                <input id="search-input" type="search" name="q" placeholder="Search Today’s US" value="{{ query }}"
+                    required />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+
+            {% if query %}
+            <p class="search-meta">
+                {{ total }} result{{ 's' if total != 1 else '' }} for
+                <strong>"{{ query }}"</strong>
+            </p>
+            {% endif %}
+        </header>
+
+        {% if not query %}
+        <p class="search-empty">
+            Enter a search term to find articles.
+        </p>
+        {% elif total == 0 %}
+        <p class="search-empty">
+            No results found for <strong>"{{ query }}"</strong>.
+        </p>
+        {% else %}
+
+        <section class="search-results">
+            {% for article in results %}
+            <article class="search-card" itemscope itemtype="https://schema.org/NewsArticle">
+
+                <h2 itemprop="headline">
+                    <a href="/{{ article.category.slug }}/{{ article.slug }}" itemprop="url">
+                        {{ article.title }}
+                    </a>
+                </h2>
+
+                <p itemprop="description">{{ article.excerpt }}</p>
+
+                <meta itemprop="datePublished" content="{{ article.published_at.isoformat() }}">
+            </article>
+
+            {% endfor %}
+        </section>
+
+        {% if has_more %}
+        <div class="pagination">
+            <a href="/search?q={{ query }}&page={{ page + 1 }}" class="btn btn-ghost" rel="nofollow">
+
+                Load more →
+            </a>
+        </div>
+        {% endif %}
+
+        {% endif %}
+
+    </main>
+
+    {% include "partials/footer.html" %}
+
+</body>
+
+</html>

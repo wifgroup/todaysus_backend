@@ -20,7 +20,7 @@ Animations + UX + Page Cache
 
 (function () {
 
-  
+
 
   /* ===========================
      EXISTING UX / UI LOGIC
@@ -31,16 +31,45 @@ Animations + UX + Page Cache
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // Mobile nav toggle
-  const menuBtn = document.getElementById("menuBtn");
+  // Mobile nav toggle (Animated)
+  const menuToggle = document.getElementById("menuToggle");
   const mobileNav = document.getElementById("mobileNav");
 
-  if (menuBtn && mobileNav) {
-    menuBtn.addEventListener("click", () => {
-      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", String(!expanded));
-      mobileNav.hidden = expanded;
+  if (menuToggle && mobileNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileNav.classList.contains("open");
+
+      // Toggle animation classes
+      menuToggle.classList.toggle("active");
+      mobileNav.classList.toggle("open");
+
+      // Accessibility
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+
+    // Close menu when clicking a link (better UX)
+    mobileNav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        menuToggle.classList.remove("active");
+        mobileNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    // Close menu on outside click (premium UX)
+    document.addEventListener("click", (e) => {
+      if (
+        mobileNav.classList.contains("open") &&
+        !mobileNav.contains(e.target) &&
+        !menuToggle.contains(e.target)
+      ) {
+        menuToggle.classList.remove("active");
+        mobileNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
     });
   }
+
 
   // Theme toggle
   const themeToggle = document.getElementById("themeToggle");

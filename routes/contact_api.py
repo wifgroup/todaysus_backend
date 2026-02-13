@@ -22,3 +22,27 @@ def submit_contact():
     })
 
     return jsonify({"message": "Message received"}), 201
+
+@contact_bp.route("/api/v1/search")
+def search_api():
+    q = request.args.get("q", "").strip()
+
+    if not q:
+        return jsonify([])
+
+    results = mongo.db.articles.find(
+        {
+            "$text": {"$search": q},
+            "status": "published",
+            "is_deleted": False
+        },
+        {"score": {"$meta": "textScore"}}
+    ).sort([("score", {"$meta": "textScore"})]).limit(5)
+
+    return jsonify([
+        {
+            "title": a["title"],
+            "url": f"/{a['category']['slug']}/{a['slug']}"
+        }
+        for a in results
+    ])

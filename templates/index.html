@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Today’s US | Independent U.S. News, Politics & Analysis</title>
+    <title>
+        Latest U.S. News Today | Politics, Business & Analysis | Today’s US
+    </title>
 
     <meta name="description"
         content="Today’s US is an independent American newsroom delivering breaking U.S. news, political coverage, business insights, technology updates, and expert analysis.">
@@ -53,20 +55,14 @@
     <!-- ================= FAVICON ================= -->
     <link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
 
+    <link rel="preconnect" href="https://todaysus.com">
+    <link rel="dns-prefetch" href="https://todaysus.com">
+
     <!-- ================= PERFORMANCE ================= -->
     <link rel="preload" href="/static/css/style.css" as="style">
     <link rel="stylesheet" href="/static/css/style.css">
 
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B3V4WGPYVP"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-B3V4WGPYVP');
-    </script>
     <!-- ================= ORGANIZATION SCHEMA ================= -->
     <script type="application/ld+json">
     {
@@ -74,6 +70,8 @@
       "@type": "NewsMediaOrganization",
       "name": "Today’s US",
       "url": "https://todaysus.com",
+      "foundingDate": "2025",
+      "publishingPrinciples": "https://todaysus.com/editorial-policy",
       "logo": {
         "@type": "ImageObject",
         "url": "https://todaysus.com/static/images/logo.png",
@@ -101,6 +99,28 @@
       }
     }
     </script>
+
+    <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Today’s US – Latest U.S. News",
+ "url": "https://todaysus.com/",
+ "mainEntity": {
+   "@type": "ItemList",
+   "itemListElement": [
+     {% for a in most_read[:10] %}
+     {
+       "@type": "ListItem",
+       "position": {{ loop.index }},
+       "url": "https://todaysus.com/{{ a.category.slug }}/{{ a.slug }}"
+     }{% if not loop.last %},{% endif %}
+     {% endfor %}
+   ]
+ }
+}
+</script>
+
 
 </head>
 
@@ -154,7 +174,14 @@
             <div class="container featured-grid">
 
                 {% if primary_feature %}
-                <article class="feature-main">
+                <article class="feature-main" itemscope itemtype="https://schema.org/NewsArticle">
+
+                    <meta itemprop="headline" content="{{ primary_feature.title }}">
+                    <meta itemprop="datePublished" content="{{ primary_feature.published_at.isoformat() }}">
+                    <meta itemprop="author" content="{{ primary_feature.author.name }}">
+                    <meta itemprop="url"
+                        content="https://todaysus.com/{{ primary_feature.category.slug }}/{{ primary_feature.slug }}">
+
                     <span class="feature-label">Featured {{ primary_feature.type | capitalize }}</span>
                     <h2>
                         <a href="/{{ primary_feature.category.slug }}/{{ primary_feature.slug }}">
@@ -205,7 +232,7 @@
                     {% for label, articles, slug in [
                     ('Politics', latest_politics, 'politics'),
                     ('Business', latest_business, 'business'),
-                    ('Technology', latest_technology, 'technology')
+                    ('NEWS', latest_news, 'news')
                     ] %}
 
                     <div class="category-block">
@@ -295,9 +322,9 @@
                     {% if big_story %}
                     <article class="story feature reveal">
                         <span class="label">The Big Story</span>
-                        <h2>{{ big_story.title }}</h2>
+                        <h3><a href="/{{ big_story.category.slug }}/{{ big_story.slug }}">{{ big_story.title }}</a></h3>
                         <p>{{ big_story.excerpt }}</p>
-                        <span class="meta">{{ big_story.type | capitalize }} · Updated regularly</span>
+                        <span class="meta"> <a href="/{{ big_story.category.slug }}">{{ big_story.category.name | capitalize }}</a> · Updated regularly</span>
                     </article>
                     {% endif %}
 
