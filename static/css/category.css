@@ -118,12 +118,32 @@ CATEGORY PAGE
 }
 
 /* RESPONSIVE */
-@media (max-width: 980px) {
+@media (min-width: 768px) and (max-width: 979px) {
+  .category-header h1 {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 767px) {
   .category-grid {
     grid-template-columns: 1fr;
   }
 
   .category-header h1 {
     font-size: 2.2rem;
+  }
+
+  .category-main {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .category-lead h2 {
+    font-size: 1.5rem;
   }
 }

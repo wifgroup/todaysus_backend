@@ -58,4 +58,4 @@
 
 .error-links a {
     color: var(--primary);
-}
+}/* Mobile responsive improvements */ @media (max-width: 767px) { .error-main { margin-top: 40px; } .error-code { font-size: 4rem; } } @media (max-width: 480px) { .error-code { font-size: 3rem; } .error-message { font-size: 1.3rem; } }

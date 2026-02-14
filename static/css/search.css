@@ -80,8 +80,8 @@
   background: linear-gradient(180deg, var(--surface), var(--surface-2));
   box-shadow: var(--shadow-soft);
   transition: transform .18s ease,
-              box-shadow .18s ease,
-              border-color .18s ease;
+    box-shadow .18s ease,
+    border-color .18s ease;
 }
 
 .search-card:hover {
@@ -190,5 +190,24 @@
   .search-main {
     padding-top: 40px;
     padding-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .search-card {
+    padding: 16px;
+  }
+
+  .search-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .search-main {
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 }

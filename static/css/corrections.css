@@ -88,3 +88,4 @@ CORRECTIONS PAGE
     font-size: 2.3rem;
   }
 }
+/* Mobile responsive improvements */ @media (max-width: 767px) { .corrections-main { margin-top: 40px; } } @media (max-width: 480px) { .corrections-hero h1 { font-size: 1.8rem; } }

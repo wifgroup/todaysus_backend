@@ -2,10 +2,10 @@
     <div class="container footer-grid">
 
         <div class="footer-brand">
-            <a href="/" class="footer-brand-link" aria-label="Today’s US home">
-                <img src="/static/images/logo.png" alt="Today’s US logo" class="footer-logo-img" width="126" height="126"
-                    loading="lazy" />
-                <span class="footer-logo-text">Today’s US</span>
+            <a href="/" class="footer-brand-link" aria-label="Today's US home">
+                <img src="/static/images/logo.png" alt="Today's US logo" class="footer-logo-img" width="126"
+                    height="126" loading="lazy" />
+                <span class="footer-logo-text">Today's US</span>
             </a>
 
             <p class="footer-desc">
@@ -29,10 +29,36 @@
             <a href="/ethics">Ethics</a>
         </div>
 
-        <div class="footer-meta">
-            <p class="disclaimer">Not affiliated with any other media outlet.</p>
-            <small>© {{ current_year }} Today’s US</small>
+        <!-- Newsletter (replaces footer-meta) -->
+        <div class="footer-newsletter" id="subscribe">
+            <h3>Our Newsletter</h3>
+            <p>Subscribe to our newsletter to get our news & updates delivered to you.</p>
+            <form class="footer-nl-form" id="subscribeForm">
+                <div class="footer-nl-input-wrap">
+                    <input name="email" type="email" placeholder="Email Address" aria-label="Email address" required />
+                    <button type="submit" class="footer-nl-btn">Join</button>
+                </div>
+                <p class="form-note"></p>
+            </form>
+            <div class="footer-bottom-meta">
+                <p class="disclaimer">Not affiliated with any other media outlet.</p>
+                <small>&copy; {{ current_year }} Today's US</small>
+            </div>
         </div>
 
     </div>
 </footer>
+
+<!-- Back to Top with Scroll Progress -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg class="progress-ring" width="48" height="48" viewBox="0 0 48 48">
+        <circle class="progress-ring-bg" cx="24" cy="24" r="20" fill="none" stroke-width="2.5" />
+        <circle class="progress-ring-fill" cx="24" cy="24" r="20" fill="none" stroke-width="2.5"
+            stroke-dasharray="125.66" stroke-dashoffset="125.66" />
+    </svg>
+    <svg class="back-to-top-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5" />
+        <polyline points="5 12 12 5 19 12" />
+    </svg>
+</button>
