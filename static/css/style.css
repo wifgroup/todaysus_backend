@@ -773,6 +773,10 @@ TODAY’S BRIEFING (HERO)
   font-weight: 700;
 }
 
+.standards-left .btn {
+  margin-top: 16px;
+}
+
 .quote {
   border: 1px solid var(--border);
   background: var(--surface);
@@ -945,6 +949,79 @@ TODAY’S BRIEFING (HERO)
   color: var(--muted);
   margin-top: 10px;
   max-width: 55ch;
+}
+
+.footer-copyright {
+  margin-top: 16px;
+}
+
+.footer-copyright p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 2px 0;
+  line-height: 1.4;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.footer-social a:hover {
+  transform: translateY(-2px);
+}
+
+/* WhatsApp - Green */
+.footer-social a:nth-child(1) {
+  color: #25D366;
+}
+
+.footer-social a:nth-child(1):hover {
+  background: rgba(37, 211, 102, 0.1);
+}
+
+/* X (Twitter) - Black/White based on theme */
+.footer-social a:nth-child(2) {
+  color: var(--text);
+}
+
+.footer-social a:nth-child(2):hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+html.theme-dark .footer-social a:nth-child(2):hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* LinkedIn - Blue */
+.footer-social a:nth-child(3) {
+  color: #0A66C2;
+}
+
+.footer-social a:nth-child(3):hover {
+  background: rgba(10, 102, 194, 0.1);
+}
+
+/* Instagram - Pink/Purple gradient color */
+.footer-social a:nth-child(4) {
+  color: #E4405F;
+}
+
+.footer-social a:nth-child(4):hover {
+  background: rgba(228, 64, 95, 0.1);
 }
 
 .footer-links h3 {
@@ -1838,8 +1915,8 @@ MOST READ — REFINED
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   z-index: 9999;
   display: flex;
   align-items: center;

@@ -168,11 +168,13 @@ const searchInput = searchOverlay?.querySelector('input[type=search]');
 
 function openSearch() {
   searchOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
   setTimeout(() => searchInput?.focus(), 300);
 }
 
 function closeSearch() {
   searchOverlay.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
 if (searchOverlay) {
