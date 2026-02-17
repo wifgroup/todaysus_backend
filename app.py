@@ -55,6 +55,12 @@ def force_https():
         return redirect(request.url.replace("http://", "https://"), code=301)
 
 
+@app.before_request
+def admin_read_only():
+    if request.path.startswith("/api/v1/admin"):
+        if request.method != "GET":
+            abort(404)
+
 app.register_blueprint(article_bp)
 
 # Page routes (HTML)
