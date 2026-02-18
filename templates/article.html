@@ -57,11 +57,11 @@
       "@type": "NewsArticle",
       "headline": "{{ article.title }}",
      "image": [
-        "{% if article.featured_image %}
-        https://todaysus.com/static/images/{{ article.featured_image }}
+        {% if article.featured_image %}
+        "https://todaysus.com/static/images/{{ article.featured_image }}"
         {% else %}
-        https://todaysus.com/static/images/og-default.jpg
-        {% endif %}"
+        "https://todaysus.com/static/images/og-default.jpg"
+        {% endif %}
         ],
 
       "datePublished": "{{ article.published_at.isoformat() }}",
@@ -80,7 +80,7 @@
         "name": "Today’s US",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://todaysus.com/logo.png",
+          "url": "https://todaysus.com/static/images/logo.png",
           "width": 600,
           "height": 60
         }
@@ -177,11 +177,11 @@
                         {% endif %}
 
                         <button class="share-trigger" data-share aria-label="Share this article">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                                <polyline points="16 6 12 2 8 6" />
-                                <line x1="12" y1="2" x2="12" y2="15" />
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                <polyline points="16 6 12 2 8 6"></polyline>
+                                <line x1="12" y1="2" x2="12" y2="15"></line>
                             </svg>
                             Share
                         </button>
@@ -214,21 +214,16 @@
                 <section class="article-body">
                     {{ article.content_html | safe }}
                 </section>
-                <p>
-                    For more on this issue, see our
-                    <a href="/{{ article.category.slug }}">
-                        latest {{ article.category.name }} coverage
-                    </a>.
-                </p>
+               
 
                 <!-- Share before topics -->
                 <div class="article-share-bar">
                     <button class="share-trigger" data-share aria-label="Share this article">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                            <polyline points="16 6 12 2 8 6" />
-                            <line x1="12" y1="2" x2="12" y2="15" />
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
                         </svg>
                         Share this article
                     </button>
@@ -236,10 +231,12 @@
 
                 <footer class="article-footer">
                     <div class="article-tags">
-                        <span>Topics:</span>
-                        {% for topic in article.topics %}
-                        <a href="/topics/{{ topic.slug }}">{{ topic.name }}</a>
-                        {% endfor %}
+                        <span>Related Topics</span>
+                        <div>
+                            {% for topic in article.topics %}
+                            <a href="/topics/{{ topic.slug }}">{{ topic.name }}</a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </footer>
 
@@ -309,12 +306,7 @@
                 </section>
 
 
-                <section class="article-newsletter">
-                    <h3>Stay informed</h3>
-                    <p>Get thoughtful reporting and analysis delivered when new stories publish.</p>
-                    <a href="#subscribe" class="btn btn-primary">Subscribe to Today’s US</a>
-                </section>
-
+               
             </article>
 
             <!-- SIDEBAR -->

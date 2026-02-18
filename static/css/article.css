@@ -1,535 +1,818 @@
 /* ===========================
-ARTICLE PAGE STYLES
-=========================== */
+   ARTICLE PAGE – Premium Editorial Design
+   =========================== */
+
+/* ---- Fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* ---- Variables (Based on User's Tailwind Config) ---- */
+:root {
+  --primary: #ec1337;
+  --background-light: #f8f6f6;
+  --background-dark: #221013;
+  --neutral-soft: #896168;
+  --neutral-dark: #181112;
+  --accent-pink: #f4f0f1;
+  --surface: #ffffff;
+  --surface-2: #f4f0f1;
+  --border: #e5e7eb;
+  --radius: 0.5rem;
+  /* rounded-lg */
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #181112;
+    --surface-2: #221013;
+    --text: #f8f6f6;
+    --border: #221013;
+  }
+}
+
+/* ---- Global Article Defaults ---- */
+body {
+  font-family: 'Newsreader', serif;
+  background-color: var(--background-light);
+  color: var(--neutral-dark);
+  line-height: 1.6;
+}
 
 .article-main {
-  margin-top: 40px;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
 }
 
+/* ---- Layout Grid ---- */
 .article-grid {
   display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  gap: 40px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3rem;
 }
 
-/* HEADER */
-.article-kicker {
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  font-weight: 800;
+@media (min-width: 1024px) {
+  .article-grid {
+    grid-template-areas:
+      ". header header header header header header header header header header ."
+      ". figure figure figure figure figure figure figure figure figure figure ."
+      ". takeaways takeaways takeaways takeaways takeaways takeaways takeaways takeaways . . ."
+      ". body body body body body body body sidebar sidebar sidebar ."
+      ". body body body body body body body sidebar sidebar sidebar ."
+      ". sharebar sharebar sharebar sharebar sharebar sharebar sharebar sidebar sidebar sidebar ."
+      ". footer footer footer footer footer footer footer sidebar sidebar sidebar ."
+      ". author author author author author author author author . . ."
+      ". newsletter newsletter newsletter newsletter newsletter newsletter newsletter . . . .";
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem 2.5rem;
+  }
+
+  .article-content {
+    display: contents;
+  }
+
+  .article-header {
+    grid-area: header;
+    text-align: center;
+  }
+
+  .article-figure {
+    grid-area: figure;
+  }
+
+  .key-takeaways {
+    grid-area: takeaways;
+  }
+
+  .article-body {
+    grid-area: body;
+  }
+
+  .article-share-bar {
+    grid-area: sharebar;
+  }
+
+  .article-footer {
+    grid-area: footer;
+  }
+
+  .author-box {
+    grid-area: author;
+  }
+
+  .article-newsletter {
+    grid-area: newsletter;
+  }
+
+  .article-sidebar {
+    grid-area: sidebar;
+  }
+}
+
+.article-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.article-header .article-kicker {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(236, 19, 55, 0.1);
+  /* bg-primary/10 */
   color: var(--primary);
+  font-size: 0.75rem;
+  /* text-xs */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .article-header h1 {
-  font-size: 2.6rem;
-  line-height: 1.15;
-  margin: 10px 0 14px;
+  font-size: 3rem;
+  /* text-5xl */
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: var(--neutral-dark);
+}
+
+@media (min-width: 768px) {
+  .article-header h1 {
+    font-size: 4.5rem;
+    /* md:text-7xl */
+  }
 }
 
 .article-deck {
-  font-size: 1.1rem;
-  color: var(--muted);
+  font-size: 1.25rem;
+  /* text-xl */
+  color: var(--neutral-soft);
+  font-style: italic;
+  font-weight: 300;
+  /* font-light */
+  max-width: 48rem;
+  /* max-w-3xl */
+  margin: 0 auto 2rem auto;
+}
+
+@media (min-width: 768px) {
+  .article-deck {
+    font-size: 1.5rem;
+    /* md:text-2xl */
+  }
 }
 
 .article-meta {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-/* IMAGE */
-.article-figure {
-  max-width: 100%;
-  margin: 1.5rem auto;
-  text-align: center;
-}
-
-.article-figure img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 8px;
-  /* optional, looks premium */
-  object-fit: contain;
-  /* prevents cropping */
-}
-
-.image-placeholder {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg,
-      rgba(0, 80, 160, 0.15),
-      rgba(0, 80, 160, 0.05));
-  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--muted);
+  gap: 1rem;
+  font-size: 0.875rem;
+  /* text-sm */
+  font-weight: 500;
+  color: var(--neutral-soft);
+  border-top: 1px solid var(--accent-pink);
+  border-bottom: 1px solid var(--accent-pink);
+  padding: 1rem 0;
+  max-width: 32rem;
+  /* max-w-lg */
+  margin: 2rem auto 0;
+}
+
+.article-meta .sep {
+  width: 4px;
+  height: 4px;
+  background: var(--accent-pink);
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.article-meta .share-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--neutral-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.article-meta .share-trigger:hover {
+  background: var(--neutral-dark);
+  color: #fff;
+  border-color: var(--neutral-dark);
+}
+
+.article-meta .share-trigger svg {
+  color: inherit;
+}
+
+.article-share-bar {
+  margin: 0.5rem 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.article-share-bar .share-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.25rem;
+  background: #fff;
+  border: 1.5px solid var(--neutral-dark);
+  border-radius: 4px;
+  color: var(--neutral-dark);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.article-share-bar .share-trigger:hover {
+  background: var(--neutral-dark);
+  color: #fff;
+}
+
+.article-share-bar .share-trigger svg {
+  color: inherit;
+}
+
+
+.article-figure {
+  margin-bottom: 3rem;
+}
+
+.article-figure img {
+  width: 100%;
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  box-shadow: var(--shadow);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .article-figure figcaption {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-top: 8px;
+  text-align: center;
+  font-size: 0.875rem;
+  /* text-sm */
+  color: var(--neutral-soft);
+  font-style: italic;
+  margin-top: 0.75rem;
 }
 
-/* BODY */
+
+/* ---- CONTENT AREA ---- */
+/* Handled by grid-template-areas on desktop */
+.article-content {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .article-content {
+    display: contents;
+  }
+}
+
+/* Adjustments to make the centered header work within the 'Left Column' of the grid */
+/* Since the HTML structure couples Header+Body, we can't span the Header across the sidebar 
+   without changing HTML. We will make the best of it: styling the header within the content text column. */
+
 .article-body {
-  font-size: 1.05rem;
+  font-size: 1.125rem;
+  /* text-lg */
   line-height: 1.75;
+  /* relaxed */
+  color: rgba(24, 17, 18, 0.9);
+  /* neutral-dark/90 */
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .article-body {
+    font-size: 1.25rem;
+    /* md:text-xl */
+  }
 }
 
 .article-body p {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
+}
+
+/* Drop Cap – ONLY for the very first paragraph of the body */
+.article-body>p:first-of-type::first-letter {
+  float: left;
+  font-size: 5rem;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .article-body h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
+  line-height: 1.2;
+}
+
+/* ---- KEY TAKEAWAYS ---- */
+.key-takeaways {
+  background: rgba(244, 240, 241, 0.5);
+  /* bg-accent-pink/50 */
+  border: 1px solid var(--accent-pink);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.key-takeaways h3 {
+  font-size: 0.75rem;
+  /* text-xs */
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.key-takeaways ul {
+  list-style: disc;
+  list-style-position: inside;
+  color: rgba(24, 17, 18, 0.8);
+}
+
+.key-takeaways li {
+  margin-bottom: 0.5rem;
+}
+
+
+/* ---- AUTHOR BOX (Redesigned) ---- */
+.author-box {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: #fff;
+  border: 1px solid var(--accent-pink);
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  display: flex;
+  /* flex-col md:flex-row */
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .author-box {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.author-box h3 {
+  /* "About the author" label replacement logic if text is present? 
+       Actually user HTML has <h3>About the author</h3> separately. 
+       We'll style that to match the "ABOUT THE AUTHOR" label. */
+  display: none;
+  /* Hide default H3, using inner structure if possible, but HTML has:
+       <h3>About the author</h3>
+       <div class="author-box-inner">...</div>
+    */
+}
+
+/* Hacking the structure via CSS to look like the design */
+/* The HTML is: 
+   <section class="author-box">
+      <h3>About the author</h3>
+      <div class="author-box-inner">
+         <div class="avatar">...</div>
+         <div class="content">...</div>
+      </div>
+   </section>
+*/
+
+.author-box-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .author-box-inner {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+/* Avatar */
+.author-box-avatar {
+  width: 6rem;
+  /* size-24 */
+  height: 6rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 4px solid var(--accent-pink);
+  overflow: hidden;
+}
+
+.author-box-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content */
+.author-box-content h4 {
   font-size: 1.5rem;
-  margin: 32px 0 12px;
+  /* text-2xl */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--neutral-dark);
 }
 
-.article-body blockquote {
-  border-left: 4px solid var(--primary);
-  padding-left: 16px;
-  margin: 28px 0;
-  color: var(--muted);
-  font-style: italic;
+.author-role {
+  font-size: 0.75rem;
+  /* text-xs */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+  display: block;
+  /* Make it look like the label */
+  order: -1;
 }
 
-/* FOOTER */
+/* We need to reorder the elements using flex order if possible, 
+   but .author-role is inside .author-box-content alongside h4. 
+   If HTML is:
+   <h4>Link Name</h4>
+   <p role></p>
+   
+   We want Role (Label) -> Name (H3).
+   Flex column allows reordering!
+*/
+
+.author-box-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-box-content h4 {
+  order: 2;
+}
+
+.author-role {
+  order: 1;
+}
+
+.author-bio {
+  order: 3;
+  font-size: 1rem;
+  /* text-base */
+  color: var(--neutral-soft);
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.author-box-links {
+  order: 4;
+  margin-top: 1rem;
+}
+
+
+/* ---- TOPICS / FOOTER (Redesigned) ---- */
 .article-footer {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border);
-  padding-top: 20px;
 }
 
 .article-tags {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.article-tags>span {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--neutral-soft);
+  display: block;
+}
+
+.article-tags div {
+  display: flex;
   flex-wrap: wrap;
-  font-size: 0.9rem;
+  gap: 0.75rem;
 }
 
 .article-tags a {
-  color: var(--primary);
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background-color: var(--surface-2);
+  color: var(--neutral-soft);
+  font-family: 'Newsreader', serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-/* AUTHOR */
-.author-box {
-  margin-top: 40px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+.article-tags a:hover {
+  background-color: var(--primary);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
-.author-box-inner {
-  display: flex;
-  gap: 1rem;
-}
 
-.author-box-avatar img {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 
-.author-box-content h4 {
-  margin: 0;
-}
 
-.author-box-links a {
-  margin-right: 10px;
-  font-size: 0.9rem;
-}
-
-/* SIDEBAR */
+/* ---- SIDEBAR (Right Column) ---- */
 .article-sidebar {
+  padding-top: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 4rem;
 }
 
 .sidebar-box {
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  position: relative;
+  /* Clean container */
 }
 
 .sidebar-box h4 {
-  margin-bottom: 10px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 2rem;
+  color: var(--neutral-dark);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.75rem;
+  display: inline-block;
+  width: 100%;
 }
 
 .sidebar-box ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar-box li {
-  margin-bottom: 8px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
-.sidebar-box.subtle {
-  background: transparent;
-  border: none;
-  font-size: 0.9rem;
+.sidebar-box li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
-/* RESPONSIVE - Article Grid */
-@media (min-width: 768px) and (max-width: 979px) {
-  .article-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .article-header h1 {
-    font-size: 2.2rem;
-  }
-
-  .article-body {
-    font-size: 1.03rem;
-  }
+.sidebar-box li a {
+  text-decoration: none;
+  color: var(--neutral-dark);
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  transition: all 0.2s ease;
 }
 
-@media (max-width: 767px) {
-  .article-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .article-header h1 {
-    font-size: 2rem;
-  }
-
-  .article-body {
-    font-size: 1.02rem;
-  }
-
-  .article-main {
-    margin-top: 24px;
-  }
-
-  /* Share trigger: when it wraps to next line, left-align */
-  .article-meta .share-trigger {
-    margin-left: 0;
-    margin-top: 6px;
-    width: 100%;
-    justify-content: flex-start;
-    padding-left: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .article-header h1 {
-    font-size: 1.6rem;
-  }
-
-  .article-deck {
-    font-size: 1rem;
-  }
-
-  .article-body {
-    font-size: 1rem;
-  }
-
-  .author-box-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .author-box-avatar img {
-    margin: 0 auto;
-  }
-}
-
-/* SIDEBAR SUBSCRIBE */
-.sidebar-subscribe {
-  background: linear-gradient(135deg,
-      rgba(0, 80, 160, 0.12),
-      rgba(0, 80, 160, 0.04));
-  border-color: rgba(0, 80, 160, 0.25);
-}
-
-.subscribe-text {
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-
-.subscribe-points {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 14px;
-}
-
-.subscribe-points li {
-  font-size: 0.9rem;
-  color: var(--muted);
-  margin-bottom: 6px;
-  position: relative;
-  padding-left: 16px;
-}
-
-.subscribe-points li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
+.sidebar-box li a:hover {
   color: var(--primary);
-  font-weight: 900;
 }
 
-.btn-full {
-  width: 100%;
+
+/* ---- TRENDING BOX (Top Stories style) ---- */
+.article-sidebar .sidebar-box:nth-child(2) {
+  background: #181112;
+  /* Neutral dark base */
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  color: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.article-sidebar .sidebar-box:nth-child(2) h4 {
+  color: var(--primary);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 2.5rem;
+}
+
+.article-sidebar .sidebar-box:nth-child(2) ul {
+  counter-reset: trending;
+}
+
+.article-sidebar .sidebar-box:nth-child(2) li {
+  display: flex;
+  gap: 1.25rem;
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-sidebar .sidebar-box:nth-child(2) li::before {
+  counter-increment: trending;
+  content: counter(trending);
+  font-family: 'Newsreader', serif;
+  font-size: 2.5rem;
+  font-weight: 200;
+  font-style: italic;
+  color: var(--primary);
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.article-sidebar .sidebar-box:nth-child(2) li a {
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.article-sidebar .sidebar-box:nth-child(2) li a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-underline-offset: 6px;
+}
+
+
+/* ---- STAY INFORMED (Sidebar Subscribe Card) ---- */
+.sidebar-subscribe {
+  background: #fdf2f4;
+  border: 1px solid var(--accent-pink);
+  padding: 2.5rem 1.5rem;
+  border-radius: 1.5rem;
   text-align: center;
 }
 
-
-
-/* KEY TAKEAWAYS */
-.key-takeaways {
-  border-left: 4px solid var(--primary);
-  background: var(--surface-2);
-  padding: 18px 20px;
-  margin: 32px 0;
-  border-radius: 8px;
+.sidebar-subscribe h4 {
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  color: var(--neutral-dark);
+  font-size: 1.25rem;
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: 'Newsreader', serif;
 }
 
-.key-takeaways h3 {
+.sidebar-subscribe .subscribe-text {
   font-size: 1rem;
-  margin-bottom: 10px;
+  color: var(--neutral-soft);
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
-.key-takeaways ul {
-  margin-left: 18px;
-  color: var(--muted);
-}
-
-.key-takeaways li {
-  margin-bottom: 8px;
-}
-
-
-/* INLINE RELATED */
-.inline-related {
-  border: 1px solid var(--border);
-  padding: 18px;
-  margin: 32px 0;
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.inline-label {
-  font-size: 0.75rem;
+.sidebar-subscribe .btn {
+  background: var(--neutral-dark);
+  color: #fff;
   font-weight: 800;
+  font-size: 0.9rem;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  /* Pill button */
   text-transform: uppercase;
-  color: var(--primary);
+  letter-spacing: 0.1em;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.inline-related h4 {
-  margin-top: 8px;
-  font-size: 1.1rem;
+.sidebar-subscribe .btn:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(236, 19, 55, 0.3);
 }
 
-/* MORE COVERAGE (ENHANCED) */
+
+/* ---- MORE COVERAGE (Bottom Recommendation Grid) ---- */
 .more-coverage {
-  margin: 90px 0;
+  margin-top: 8rem;
+  padding-top: 6rem;
+  border-top: 1px solid var(--border);
 }
 
 .more-coverage-head {
-  margin-bottom: 32px;
+  margin-bottom: 4rem;
+  text-align: center;
 }
 
 .more-coverage-head h2 {
-  font-size: 1.6rem;
-  margin-bottom: 6px;
+  font-family: 'Newsreader', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--neutral-dark);
 }
 
 .more-coverage-sub {
-  color: var(--muted);
-  max-width: 60ch;
+  font-size: 1.25rem;
+  color: var(--neutral-soft);
+  font-style: italic;
+  opacity: 0.8;
 }
 
-/* GRID */
 .coverage-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 3rem;
 }
 
-/* CARD */
+@media (min-width: 768px) {
+  .coverage-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .coverage-card {
-  padding: 22px;
-  border-radius: var(--radius);
-  background: linear-gradient(180deg,
-      var(--surface),
-      var(--surface-2));
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem;
+  background: #fff;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 1rem;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .coverage-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
 }
 
-/* KICKER */
 .coverage-kicker {
-  display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.05em;
   text-transform: uppercase;
+  letter-spacing: 0.15em;
   color: var(--primary);
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
 }
 
-/* TITLE */
 .coverage-card h3 {
-  font-size: 1.15rem;
-  line-height: 1.3;
+  font-family: 'Newsreader', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
 }
 
 .coverage-card h3 a {
   text-decoration: none;
+  color: var(--neutral-dark);
+  transition: color 0.2s;
 }
 
-.coverage-card h3 a:hover {
-  text-decoration: underline;
-}
-
-/* DESCRIPTION */
 .coverage-card p {
-  color: var(--muted);
-  margin-top: 10px;
-  font-size: 0.95rem;
-}
-
-/* RESPONSIVE - Coverage Grid */
-@media (min-width: 768px) and (max-width: 979px) {
-  .coverage-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-}
-
-@media (max-width: 767px) {
-  .coverage-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .more-coverage {
-    margin: 60px 0;
-  }
-
-  .more-coverage-head h2 {
-    font-size: 1.4rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .more-coverage-head h2 {
-    font-size: 1.3rem;
-  }
-
-  .coverage-card {
-    padding: 18px;
-  }
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--neutral-soft);
+  margin-top: 0;
 }
 
 
-
-/* AD SLOT */
-.ad-slot {
-  margin: 60px 0;
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.ad-placeholder {
-  height: 120px;
-  border: 1px dashed var(--border);
-  border-radius: 6px;
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-/* ARTICLE NEWSLETTER */
-.article-newsletter {
-  margin-top: 36px;
-  padding: 28px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg,
-      rgba(0, 80, 160, 0.12),
-      rgba(0, 80, 160, 0.04));
-}
-
-.article-newsletter p {
-  margin-bottom: 12px;
-}
-
-/* ===========================
-   SHARE BUTTON & POPUP
-=========================== */
-
-/* Share trigger button (inline) */
-.share-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: color .2s ease, background .2s ease;
-  margin-left: auto;
-  font-family: inherit;
-}
-
-.share-trigger:hover {
-  color: var(--primary);
-  background: rgba(255, 37, 37, 0.06);
-}
-
-/* Share bar above topics — centered */
-.article-share-bar {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-  border-top: 1px solid var(--border);
-  margin-top: 36px;
-}
-
-.article-share-bar .share-trigger {
-  margin-left: 0;
-}
-
-/* Share Popup Overlay */
+/* ---- SHARE POPUP & OVERLAY ---- */
 .share-popup-overlay {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .25s ease, visibility .25s ease;
+  transition: all .3s ease;
 }
 
 .share-popup-overlay.active {
@@ -537,17 +820,15 @@ ARTICLE PAGE STYLES
   visibility: visible;
 }
 
-/* Popup card */
 .share-popup {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
+  background: #fff;
+  border-radius: 2rem;
   width: 90%;
-  max-width: 360px;
-  padding: 22px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
-  transform: translateY(20px) scale(0.95);
-  transition: transform .25s ease;
+  max-width: 420px;
+  padding: 3rem;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+  transform: translateY(40px) scale(0.95);
+  transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .share-popup-overlay.active .share-popup {
@@ -558,84 +839,73 @@ ARTICLE PAGE STYLES
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 2.5rem;
 }
 
 .share-popup-header h3 {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-family: 'Newsreader', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
 }
 
 .share-popup-close {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border: none;
-  background: var(--surface-2);
+  background: var(--background-light);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .2s ease, color .2s ease;
+  transition: all .3s ease;
 }
 
 .share-popup-close:hover {
   background: var(--primary);
   color: #fff;
+  transform: rotate(90deg);
 }
 
-/* Share options grid */
 .share-popup-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 1.5rem;
 }
 
 .share-option {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 12px 6px;
-  border-radius: 12px;
+  gap: 0.75rem;
+  padding: 1.25rem 0.5rem;
+  border-radius: 1.5rem;
   border: 1px solid var(--border);
-  background: var(--surface);
   cursor: pointer;
   text-decoration: none;
-  color: var(--text);
-  font-size: 0.78rem;
-  font-weight: 600;
-  font-family: inherit;
-  transition: background .2s ease, border-color .2s ease, transform .15s ease;
+  color: var(--neutral-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all .2s ease;
 }
 
 .share-option:hover {
-  background: var(--surface-2);
+  background: #fff;
   border-color: var(--primary);
-  transform: translateY(-2px);
-  text-decoration: none;
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* Share icon circles */
 .share-icon {
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.share-icon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.share-icon.whatsapp svg {
-  width: 20px;
-  height: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .share-icon.whatsapp {
@@ -646,11 +916,6 @@ ARTICLE PAGE STYLES
 .share-icon.x-twitter {
   background: #000;
   color: #fff;
-}
-
-html.theme-dark .share-icon.x-twitter {
-  background: #fff;
-  color: #000;
 }
 
 .share-icon.linkedin {
@@ -664,53 +929,39 @@ html.theme-dark .share-icon.x-twitter {
 }
 
 .share-icon.email {
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: var(--neutral-soft);
+  color: #fff;
 }
 
 .share-icon.copy {
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-/* Copy success state */
-.share-option.copied .share-icon.copy {
-  background: #22c55e;
+  background: var(--neutral-dark);
   color: #fff;
+}
+
+.share-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.share-option.copied {
   border-color: #22c55e;
+  background: #f0fdf4 !important;
 }
 
-/* Dark mode */
-html.theme-dark .share-popup {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  .share-popup {
-    width: 92%;
-    padding: 18px;
-    border-radius: 14px;
+/* ---- RESPONSIVE FINAL ---- */
+@media (max-width: 1023px) {
+  .article-grid {
+    grid-template-columns: 1fr;
   }
 
-  .share-popup-grid {
-    gap: 8px;
+  .article-sidebar {
+    order: 2;
+    margin-top: 4rem;
   }
 
-  .share-option {
-    padding: 10px 4px;
-    font-size: 0.75rem;
-  }
-
-  .share-icon {
-    width: 32px;
-    height: 32px;
-  }
-
-  .share-icon svg {
-    width: 16px;
-    height: 16px;
+  .article-content {
+    max-width: 100%;
+    margin-right: 0;
   }
 }

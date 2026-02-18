@@ -10,7 +10,7 @@
     <meta name="robots" content="index, follow" />
 
     <link rel="canonical" href="https://todaysus.com/topics/{{ topic.slug }}/" />
-<!-- ================= FAVICON ================= -->
+    <!-- ================= FAVICON ================= -->
     <link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ topic.name }} – Today’s US" />
@@ -29,7 +29,7 @@
         <!-- TOPIC HEADER -->
         <header class="category-header">
             <span class="category-kicker">Topic</span>
-            <h1>{{ topic.name }}</h1>
+            <h1>{{ topic.name | title }}</h1>
             <p class="category-desc">
                 Articles and analysis related to {{ topic.name }}.
             </p>
@@ -42,24 +42,35 @@
 
                 {% if lead_article %}
                 <article class="category-lead">
-                    <span class="label">{{ lead_article.type | capitalize }}</span>
+                    <span class="label">Featured {{ lead_article.type | capitalize }}</span>
+
                     <h2>
                         <a href="/{{ lead_article.category.slug }}/{{ lead_article.slug }}">
                             {{ lead_article.title }}
                         </a>
                     </h2>
+
                     <p>{{ lead_article.excerpt }}</p>
+
+                    {% if lead_article.featured_image %}
+                    <div class="lead-image">
+                        <a href="/{{ lead_article.category.slug }}/{{ lead_article.slug }}">
+                            <img src="/static/images/{{ lead_article.featured_image }}" alt="{{ lead_article.title }}"
+                                width="1200" height="675" loading="eager">
+                        </a>
+                    </div>
+                    {% endif %}
+
                     <div class="meta">
                         <span>{{ lead_article.type | capitalize }}</span>
                         <span class="sep">•</span>
-                        <time>
-                            <!-- {{ lead_article.published_at.strftime('%b %d, %Y') }} -->
+                        <time
+                            datetime="{{ lead_article.published_at.isoformat() if lead_article.published_at else lead_article.created_at.isoformat() }}">
                             {% if lead_article.published_at %}
                             {{ lead_article.published_at.strftime('%b %d, %Y') }}
                             {% else %}
                             {{ lead_article.created_at.strftime('%b %d, %Y') }}
                             {% endif %}
-
                         </time>
                     </div>
                 </article>
@@ -67,24 +78,39 @@
 
                 <div class="story-stream">
                     {% for a in stream_articles %}
-                    <article class="stream-item">
-                        <h3>
-                            <a href="/{{ a.category.slug }}/{{ a.slug }}">
-                                {{ a.title }}
-                            </a>
-                        </h3>
-                        <p>{{ a.excerpt }}</p>
-                        <span class="stream-meta">
-                            {{ a.type | capitalize }} •
-                            <!-- {{ a.published_at.strftime('%b %d, %Y') }} -->
-                            {% if a.published_at %}
-                            {{ a.published_at.strftime('%b %d, %Y') }}
-                            {% else %}
-                            {{ a.created_at.strftime('%b %d, %Y') }}
-                            {% endif %}
+                    {% if not lead_article or a._id != lead_article._id %}
+                    <article class="stream-item" itemscope itemtype="https://schema.org/NewsArticle">
 
-                        </span>
+                        {% if a.featured_image %}
+                        <figure class="stream-media">
+                            <a href="/{{ a.category.slug }}/{{ a.slug }}">
+                                <img src="/static/images/{{ a.featured_image }}" alt="{{ a.title }}" loading="lazy"
+                                    width="300" height="169">
+                            </a>
+                        </figure>
+                        {% endif %}
+
+                        <div class="stream-content">
+                            <h3 itemprop="headline">
+                                <a href="/{{ a.category.slug }}/{{ a.slug }}" itemprop="url">
+                                    {{ a.title }}
+                                </a>
+                            </h3>
+                            <p itemprop="description">{{ a.excerpt }}</p>
+                            <span class="stream-meta">
+                                {{ a.type | capitalize }} •
+                                <time itemprop="datePublished"
+                                    datetime="{{ a.published_at.isoformat() if a.published_at else a.created_at.isoformat() }}">
+                                    {% if a.published_at %}
+                                    {{ a.published_at.strftime('%b %d, %Y') }}
+                                    {% else %}
+                                    {{ a.created_at.strftime('%b %d, %Y') }}
+                                    {% endif %}
+                                </time>
+                            </span>
+                        </div>
                     </article>
+                    {% endif %}
                     {% endfor %}
                 </div>
 
@@ -101,22 +127,27 @@
             <!-- SIDEBAR -->
             <aside class="category-sidebar">
 
-                <div class="sidebar-box">
-                    <h4>Most read</h4>
+                <div class="sidebar-box sidebar-trending">
+                    <h4>Trending</h4>
                     <ol class="most-read">
                         {% for a in most_read %}
                         <li>
-                            <a href="/{{ a.category.slug }}/{{ a.slug }}">
-                                {{ a.title }}
-                            </a>
+                            <div class="most-read-text">
+                                <a href="/{{ a.category.slug }}/{{ a.slug }}">
+                                    {{ a.title }}
+                                </a>
+                                {% if a.category %}
+                                <span class="most-read-category">{{ a.category.name }}</span>
+                                {% endif %}
+                            </div>
                         </li>
                         {% endfor %}
                     </ol>
                 </div>
 
                 <div class="sidebar-box sidebar-subscribe">
-                    <h4>Stay informed</h4>
-                    <p>Get new reporting when it publishes.</p>
+                    <h4>Independent journalism for a defining era.</h4>
+                    <p>Get unlimited access to verified reporting, analysis, and exclusive insights from Today's US.</p>
                     <a href="#subscribe" class="btn btn-primary btn-full">Subscribe</a>
                 </div>
 

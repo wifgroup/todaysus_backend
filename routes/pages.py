@@ -191,7 +191,12 @@ def category_page(category_slug):
         "is_deleted": False,
         "category.slug": category_slug
     }
-    most_read_query =query
+
+    most_read_query = query.copy()
+
+    # Exclude lead story from stream to prevent duplication
+    if lead_article:
+        query["_id"] = {"$ne": lead_article["_id"]}
     # {
     #     "status": "published",
     #     "is_deleted": False,

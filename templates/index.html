@@ -24,8 +24,7 @@
     <link rel="canonical" href="https://todaysus.com/">
 
     <!-- ================= GOOGLE NEWS ================= -->
-    <meta name="news_keywords"
-        content="U.S. News, American Politics, White House, Congress, Economy, Technology, Business News">
+    <!-- news_keywords is deprecated, removed -->
 
     <!-- ================= OPEN GRAPH ================= -->
     <meta property="og:site_name" content="Today’s US">
@@ -142,11 +141,16 @@
             <div class="container hero-grid">
                 <div class="hero-left">
                     <p class="kicker">Independent U.S. Journalism</p>
-                    <h1>Clear reporting on what’s shaping America today.</h1>
+                    <h1>Latest U.S. News, Politics & Business Coverage</h1>
                     <p class="lead">
-                        Today’s US is an independent newsroom focused on accuracy,
-                        verification, and context across U.S. politics, business,
-                        technology, and society.
+                        Today’s US is an independent newsroom delivering <strong>breaking U.S. news</strong>,
+                        <strong>U.S. politics news</strong>, <strong>American business news</strong>, and
+                        <strong>technology news</strong>.
+                        <br><br>
+                        We focus on accuracy, verification, and context. Learn more about our
+                        <a href="/about" style="text-decoration: underline;">mission</a>,
+                        <a href="/corrections" style="text-decoration: underline;">corrections policy</a>, and
+                        <a href="/editorial-policy" style="text-decoration: underline;">editorial standards</a>.
                     </p>
                 </div>
 
@@ -181,11 +185,42 @@
                 {% if primary_feature %}
                 <article class="feature-main" itemscope itemtype="https://schema.org/NewsArticle">
 
+                    <script type="application/ld+json">
+                    {
+                      "@context": "https://schema.org",
+                      "@type": "NewsArticle",
+                      "headline": "{{ primary_feature.title }}",
+                      "image": [
+                        "https://todaysus.com/static/images/{{ primary_feature.featured_image }}"
+                      ],
+                      "datePublished": "{{ primary_feature.published_at.isoformat() }}",
+                      "author": {
+                        "@type": "Person",
+                        "name": "{{ primary_feature.author.name }}"
+                      },
+                      "publisher": {
+                        "@type": "Organization",
+                        "name": "Today’s US",
+                        "logo": {
+                          "@type": "ImageObject",
+                          "url": "https://todaysus.com/static/images/logo.png"
+                        }
+                      }
+                    }
+                    </script>
+
                     <meta itemprop="headline" content="{{ primary_feature.title }}">
                     <meta itemprop="datePublished" content="{{ primary_feature.published_at.isoformat() }}">
                     <meta itemprop="author" content="{{ primary_feature.author.name }}">
                     <meta itemprop="url"
                         content="https://todaysus.com/{{ primary_feature.category.slug }}/{{ primary_feature.slug }}">
+
+                    {% if primary_feature.featured_image %}
+                    <figure class="feature-media" style="margin-bottom: 1rem;">
+                        <img src="/static/images/{{ primary_feature.featured_image }}" alt="{{ primary_feature.title }}"
+                            width="1200" height="675" style="width: 100%; height: auto; border-radius: 8px;">
+                    </figure>
+                    {% endif %}
 
                     <span class="feature-label">Featured {{ primary_feature.type | capitalize }}</span>
                     <h2>
@@ -326,6 +361,30 @@
                     <!-- THE BIG STORY -->
                     {% if big_story %}
                     <article class="story feature reveal">
+                        <script type="application/ld+json">
+                        {
+                          "@context": "https://schema.org",
+                          "@type": "NewsArticle",
+                          "headline": "{{ big_story.title }}",
+                          "image": [
+                            "https://todaysus.com/static/images/{{ big_story.featured_image }}"
+                          ],
+                          "datePublished": "{{ big_story.published_at.isoformat() }}",
+                           "author": {
+                            "@type": "Person",
+                            "name": "{{ big_story.author.name }}"
+                          },
+                          "publisher": {
+                            "@type": "Organization",
+                            "name": "Today’s US",
+                            "logo": {
+                              "@type": "ImageObject",
+                              "url": "https://todaysus.com/static/images/logo.png"
+                            }
+                          }
+                        }
+                        </script>
+
                         <span class="label">The Big Story</span>
                         <h3><a href="/{{ big_story.category.slug }}/{{ big_story.slug }}">{{ big_story.title }}</a></h3>
                         <p>{{ big_story.excerpt }}</p>
