@@ -40,6 +40,24 @@ body {
   line-height: 1.6;
 }
 
+/* ---- Reading Progress Bar ---- */
+.reading-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  z-index: 2000;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.1s ease;
+}
+
 .article-main {
   max-width: 80rem;
   margin: 0 auto;
@@ -63,10 +81,10 @@ body {
       ". body body body body body body body sidebar sidebar sidebar ."
       ". sharebar sharebar sharebar sharebar sharebar sharebar sharebar sidebar sidebar sidebar ."
       ". footer footer footer footer footer footer footer sidebar sidebar sidebar ."
-      ". author author author author author author author author . . ."
+      ". author author author author author author author sidebar sidebar sidebar ."
       ". newsletter newsletter newsletter newsletter newsletter newsletter newsletter . . . .";
     grid-template-columns: repeat(12, 1fr);
-    gap: 1rem 2.5rem;
+    gap: 3rem 2.5rem;
   }
 
   .article-content {
@@ -108,6 +126,9 @@ body {
 
   .article-sidebar {
     grid-area: sidebar;
+    position: sticky;
+    top: 6rem;
+    height: fit-content;
   }
 }
 
@@ -299,6 +320,8 @@ body {
   color: rgba(24, 17, 18, 0.9);
   /* neutral-dark/90 */
   margin-bottom: 1rem;
+  max-width: 48rem;
+  /* ~768px - Restricted for readability */
 }
 
 @media (min-width: 768px) {
@@ -363,16 +386,15 @@ body {
 
 /* ---- AUTHOR BOX (Redesigned) ---- */
 .author-box {
-  margin-top: 4rem;
-  padding: 2rem;
+  margin-top: 2rem;
+  padding: 2.5rem;
   background: #fff;
   border: 1px solid var(--accent-pink);
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   /* rounded-xl */
   display: flex;
-  /* flex-col md:flex-row */
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
   align-items: center;
 }
 
@@ -437,6 +459,20 @@ body {
   object-fit: cover;
 }
 
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-2);
+  color: var(--neutral-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 /* Content */
 .author-box-content h4 {
   font-size: 1.5rem;
@@ -476,6 +512,7 @@ body {
 
 .author-box-content h4 {
   order: 2;
+  margin-bottom: 0.75rem;
 }
 
 .author-role {
@@ -493,7 +530,23 @@ body {
 
 .author-box-links {
   order: 4;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.author-profile-link {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--neutral-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.author-profile-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
 }
 
 
@@ -582,8 +635,8 @@ body {
 }
 
 .sidebar-box li {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -605,6 +658,40 @@ body {
 
 .sidebar-box li a:hover {
   color: var(--primary);
+}
+
+/* Sidebar with Thumbnails */
+.sidebar-item-with-thumb {
+  display: flex !important;
+  gap: 1rem;
+  align-items: center;
+  /* Better alignment for small thumbs */
+}
+
+.sidebar-thumb {
+  flex-shrink: 0;
+  width: 80px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.sidebar-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-thumb:hover img {
+  transform: scale(1.1);
+}
+
+.sidebar-link {
+  font-size: 1rem !important;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 
@@ -963,5 +1050,40 @@ body {
   .article-content {
     max-width: 100%;
     margin-right: 0;
+  }
+}
+
+/* ---- PRINT STYLES ---- */
+@media print {
+
+  .header,
+  .footer,
+  .article-sidebar,
+  .article-share-bar,
+  .share-popup-overlay,
+  .reading-progress-container,
+  .more-coverage,
+  .ad-slot,
+  .back-to-top {
+    display: none !important;
+  }
+
+  .article-main {
+    padding: 0;
+  }
+
+  .article-grid {
+    display: block;
+  }
+
+  .article-body {
+    max-width: 100%;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
   }
 }

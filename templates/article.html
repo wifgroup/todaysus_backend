@@ -138,11 +138,25 @@
 
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/article.css" />
+
+    <!-- Performance Preloads -->
+    <link rel="preload" href="/static/css/article.css" as="style">
+    {% if article.featured_image %}
+    <link rel="preload" href="/static/images/{{ article.featured_image }}" as="image">
+    {% endif %}
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
+        as="style">
 </head>
 
 <body>
 
     {% include "partials/header.html" %}
+
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-container">
+        <div class="reading-progress-bar" id="readingProgress"></div>
+    </div>
 
     <main class="article-main container">
 
@@ -214,7 +228,7 @@
                 <section class="article-body">
                     {{ article.content_html | safe }}
                 </section>
-               
+
 
                 <!-- Share before topics -->
                 <div class="article-share-bar">
@@ -306,7 +320,7 @@
                 </section>
 
 
-               
+
             </article>
 
             <!-- SIDEBAR -->
@@ -316,8 +330,13 @@
                     <h4>Most relevant</h4>
                     <ul>
                         {% for r in relevant_articles %}
-                        <li>
-                            <a href="/{{ r.category.slug }}/{{ r.slug }}">
+                        <li class="sidebar-item-with-thumb">
+                            {% if r.featured_image %}
+                            <a href="/{{ r.category.slug }}/{{ r.slug }}" class="sidebar-thumb">
+                                <img src="/static/images/{{ r.featured_image }}" alt="" loading="lazy">
+                            </a>
+                            {% endif %}
+                            <a href="/{{ r.category.slug }}/{{ r.slug }}" class="sidebar-link">
                                 {{ r.title }}
                             </a>
                         </li>

@@ -308,8 +308,38 @@ if (searchOverlay) {
 })();
 
 /* ===========================
-   Smooth Scroll to #subscribe
+   Reading Progress Bar Logic
 =========================== */
+(function () {
+  const progressBar = document.getElementById('readingProgress');
+  if (!progressBar) return;
+
+  function updateReadingProgress() {
+    const scrollTop = window.scrollY;
+    // We calculate progress based on the main article content height rather than the whole page
+    const article = document.querySelector('.article-main');
+    if (!article) return;
+
+    const articleTop = article.offsetTop;
+    const articleHeight = article.offsetHeight;
+    const windowHeight = window.innerHeight;
+
+    // Calculate how much of the article has been read
+    let progress = 0;
+    if (scrollTop > articleTop) {
+      progress = ((scrollTop - articleTop) / (articleHeight - windowHeight)) * 100;
+    }
+
+    // Clamp between 0 and 100
+    progress = Math.min(100, Math.max(0, progress));
+    progressBar.style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateReadingProgress, { passive: true });
+  window.addEventListener('resize', updateReadingProgress, { passive: true });
+  updateReadingProgress();
+})();
+
 (function () {
   document.querySelectorAll('a[href="#subscribe"], .nav-cta[href="#subscribe"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
